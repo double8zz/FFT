@@ -1,0 +1,4239 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SeeSharpTools.JXI.Numerics</name>
+    </assembly>
+    <members>
+        <member name="T:SeeSharpTools.JXI.Public.Struct.CircularBufferEx`1">
+            <summary>
+            循环缓冲队列扩展类（非托管内存），主要用于实现循环缓冲链
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Public.Struct.CircularBufferEx`1._reader">
+            <summary>
+            定义读指针
+            </summary>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Public.Struct.CircularBufferEx`1._writer">
+            <summary>
+            定义写指针
+            </summary>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Public.Struct.CircularBufferEx`1._isDisposed">
+            <summary>
+            要检测冗余调用
+            </summary>
+        </member>
+        <member name="P:SeeSharpTools.JXI.Public.Struct.CircularBufferEx`1.NumOfElements">
+            <summary>
+            当前队列中的元素个数。
+            </summary>
+        </member>
+        <member name="P:SeeSharpTools.JXI.Public.Struct.CircularBufferEx`1.CurrentCapacity">
+            <summary>
+            当前能容纳的元素个数，即BufferSize - NumOfElements。
+            </summary>
+        </member>
+        <member name="P:SeeSharpTools.JXI.Public.Struct.CircularBufferEx`1.BufferSize">
+            <summary>
+            缓冲区的大小，元素个数，即实例化时设定的长度。
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.CircularBufferEx`1.#ctor(System.Int32,System.Boolean)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="bufferSize"> 缓冲区大小 </param>
+            <param name="overwriteReader"> 读指针类型 </param>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.CircularBufferEx`1.Finalize">
+            <summary>
+            析构函数，避免非托管内存没有释放
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.CircularBufferEx`1.Dispose">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.CircularBufferEx`1.Enqueue(`0[],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            向缓冲队列中放入一组数据，若队列中的空间不足，则等待至超时。
+            若等待至超时后队列中的空间仍不足以放入所有数据，则根据forceEnqueue参数决定此时的行为。
+            </summary>
+            <param name="sourceArray"> 写入数据数据源 </param>
+            <param name="sourceIndex"> sourceArray 中复制开始处的索引</param>
+            <param name="length">要复制的元素数目。</param>
+            <param name="timeout">超时毫秒数。Timout.Infinite即-1为始终等待。</param>
+            <returns>若成功放入则返回true，否则返回false（不放入任何数据）。</returns>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.CircularBufferEx`1.Enqueue(`0[],System.Int32)">
+            <summary>
+            向缓冲队列中放入一组数据，若队列中的空间不足，则等待至超时。
+            若等待至超时后队列中的空间仍不足以放入所有数据，则根据forceEnqueue参数决定此时的行为。
+            若成功放入则返回true，否则返回false（不放入任何数据）。
+            </summary>
+            <param name="sourceArray"> 写入数据数据源 </param>
+            <param name="timeout">超时毫秒数。Timout.Infinite即-1为始终等待。</param>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.CircularBufferEx`1.Dequeue(`0[]@,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            向缓冲队列中取出指定长度的数据，若队列中的元素不足，则等待至超时。
+            </summary>
+            <param name="destinationArray">存储读出数据的数组。</param>
+            <param name="destinationIndex">  destinationArray 中存储开始处的索引。</param>
+            <param name="length">要读取的元素个数。</param>
+            <param name="timeout">超时毫秒数。Timout.Infinite即-1为始终等待。</param>
+            <returns>若成功读取所需长度则返回true，否则返回false（不读取任何数据）。</returns>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.CircularBufferEx`1.Dequeue(`0[]@,System.Int32)">
+            <summary>
+            向缓冲队列中取出指定长度的数据，若队列中的元素不足，则等待至超时。
+            </summary>
+            <param name="destinationArray">存储读出数据的数组，其长度即为要读出的元素个数。</param>
+            <param name="timeout">超时毫秒数。Timout.Infinite即-1为始终等待。</param>
+            <returns>若成功读取所需长度则返回true，否则返回false（不读取任何数据）。</returns>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.CircularBufferEx`1.Clear">
+            <summary>
+            清空循环缓冲区的数据
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.CircularBufferEx`1.GetRawData(`0[]@)">
+            <summary>
+            获取循环缓冲区的原始顺序数据。
+            </summary>
+            <param name="destinationArray"></param>
+        </member>
+        <member name="T:SeeSharpTools.JXI.Public.Struct.CircularBufferReader`1">
+            <summary>
+            CircularBuffer的读函数封装
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Public.Struct.CircularBufferReader`1._bufferHandle">
+            <summary>
+            CircularBuffer 数据句柄。
+            </summary>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Public.Struct.CircularBufferReader`1.readPointsCount">
+            <summary>
+            总共读取的元素个数。
+            ReadPointsCount 对 _bufferSize 取余，就是读指针位置。
+            由于 Clear，或者 Enqueue Overwrite操作，数值会大于实际读数(Dequeue)
+            </summary>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Public.Struct.CircularBufferReader`1.actualReadCount">
+            <summary>
+            实际总共读取的元素个数。
+            所有Dequeue操作读取元素总和，数值小于等于 readPointsCount
+            </summary>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Public.Struct.CircularBufferReader`1.initReadPosition">
+            <summary>
+            Reader 初始化的位置。
+            Clear 时重置初始化位置。
+            </summary>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Public.Struct.CircularBufferReader`1.readerType">
+            <summary>
+            读指针的类型
+            </summary>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Public.Struct.CircularBufferReader`1.readPointerLock">
+            <summary>
+            读指针的锁
+            readPointer 只有 Dequeue ，Clear 操作会进行写入，所有写入必须加锁，指针移动只能单次进行。
+            readPointer 只有 Enqueue ，GetNumOfElement ，GetCapacity操作会进行读取。
+            readPointer 是单调递增，所以 Enqueue ，GetCapacity ， 对 readPointer 不加锁产生的结果影响非负面。
+            </summary>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Public.Struct.CircularBufferReader`1._isDisposed">
+            <summary>
+            要检测冗余调用
+            </summary>
+        </member>
+        <member name="P:SeeSharpTools.JXI.Public.Struct.CircularBufferReader`1.BufferHandle">
+            <summary>
+            获取Circular Buffer 句柄，当前读指针归属的Circular Buffer，即由该Circular Buffer创建。
+            </summary>
+        </member>
+        <member name="P:SeeSharpTools.JXI.Public.Struct.CircularBufferReader`1.NumOfElements">
+            <summary>
+            当前读指针队列中的元素个数。
+            </summary>
+        </member>
+        <member name="P:SeeSharpTools.JXI.Public.Struct.CircularBufferReader`1.CurrentCapacity">
+            <summary>
+            当前能容纳的元素个数。
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.CircularBufferReader`1.#ctor(SeeSharpTools.JXI.Public.Struct.CircularBufferHandle{`0},SeeSharpTools.JXI.Public.Struct.CircularBufReaderType)">
+            <summary>
+            构造函数，外部调用。
+            新增一个读指针
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.CircularBufferReader`1.Finalize">
+            <summary>
+            析构函数
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.CircularBufferReader`1.Dispose">
+            <summary>
+            释放对读指针的引用
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.CircularBufferReader`1.Dequeue(System.IntPtr,System.Int32,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            向缓冲队列中取出指定长度的数据，若队列中的元素不足，则等待至超时。
+            </summary>
+            <param name="outputPtr">存储读出数据的数组。</param>
+            <param name="destinationIndex">  destinationArray 中存储开始处的索引。</param>
+            <param name="length">要读取的元素个数。</param>
+            <param name="timeout">超时毫秒数。Timout.Infinite即-1为始终等待。</param>
+            <param name="latestData">最新的数据。true表示从CircularBuffer 队尾进行Dequeue。</param>
+            <returns>若成功读取所需长度则返回true，否则返回false（不读取任何数据）。</returns>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.CircularBufferReader`1.Dequeue(`0[]@,System.Int32,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            向缓冲队列中取出指定长度的数据，若队列中的元素不足，则等待至超时。
+            </summary>
+            <param name="destinationArray">存储读出数据的数组。</param>
+            <param name="destinationIndex">  destinationArray 中存储开始处的索引。</param>
+            <param name="length">要读取的元素个数。</param>
+            <param name="timeout">超时毫秒数。Timout.Infinite即-1为始终等待。</param>        
+            <param name="latestData">最新的数据。true表示从CircularBuffer 队尾进行Dequeue。</param>
+            <returns>若成功读取所需长度则返回true，否则返回false（不读取任何数据）。</returns>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.CircularBufferReader`1.Dequeue(`0[]@,System.Int32,System.Boolean)">
+            <summary>
+            向缓冲队列中取出指定长度的数据，若队列中的元素不足，则等待至超时。
+            </summary>
+            <param name="destinationArray">存储读出数据的数组，其长度即为要读出的元素个数。</param>
+            <param name="timeout">超时毫秒数。Timout.Infinite即-1为始终等待。</param>    
+            <param name="latestData">最新的数据。true表示从CircularBuffer 队尾进行Dequeue。</param>
+            <returns>若成功读取所需长度则返回true，否则返回false（不读取任何数据）。</returns>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.CircularBufferReader`1.Clear">
+            <summary>
+            清空循环缓冲区的数据
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.CircularBufferReader`1.GetNumOfElement">
+            <summary>
+            当前读指针队列中的元素个数。
+            非保护方法，仅内部使用。
+            返回值大于bufferSize，表示数据被覆盖。返回值不会小于0。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.CircularBufferReader`1.GetCurrentCapacity">
+            <summary>
+            当前读指针队列中的元素个数。
+            非保护方法，仅内部使用。
+            返回值小于0，表示数据被覆盖。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:SeeSharpTools.JXI.Public.Struct.CircularBuffer`1">
+            <summary>
+            循环缓冲队列扩展类（非托管内存），主要用于实现循环缓冲链，多读指针支持
+            </summary>
+            <typeparam name="T">泛型</typeparam>
+        </member>
+        <member name="P:SeeSharpTools.JXI.Public.Struct.CircularBuffer`1.BufferHandle">
+            <summary>
+            获取Circular Buffer 句柄。既是 Circular Buffer 本身，也是唯一的 writer 。
+            </summary>
+        </member>
+        <member name="P:SeeSharpTools.JXI.Public.Struct.CircularBuffer`1.BufferSize">
+            <summary>
+            缓冲区的大小，元素个数，即实例化时设定的长度。
+            </summary>
+        </member>
+        <member name="P:SeeSharpTools.JXI.Public.Struct.CircularBuffer`1.CurrentCapacity">
+            <summary>
+            能容纳的元素个数。
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.CircularBuffer`1.#ctor(System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="bufferSize">缓冲区大小</param>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.CircularBuffer`1.Finalize">
+            <summary>
+            析构函数
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.CircularBuffer`1.Enqueue(System.IntPtr,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            向缓冲队列中放入一组数据，若队列中的空间不足，则等待至超时。
+            若等待至超时后队列中的空间仍不足以放入所有数据，则根据forceEnqueue参数决定此时的行为。
+            </summary>
+            <param name="inputPtr"> 写入数据数据源 </param>
+            <param name="sourceIndex"> sourceArray 中复制开始处的索引</param>
+            <param name="length">要复制的元素数目。</param>
+            <param name="timeout">超时毫秒数。Timout.Infinite即-1为始终等待。</param>
+            <returns>若成功放入则返回true，否则返回false（不放入任何数据）。</returns>        
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.CircularBuffer`1.Enqueue(`0[],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            向缓冲队列中放入一组数据，若队列中的空间不足，则等待至超时。
+            若等待至超时后队列中的空间仍不足以放入所有数据，则根据forceEnqueue参数决定此时的行为。
+            </summary>
+            <param name="sourceArray"> 写入数据数据源 </param>
+            <param name="sourceIndex"> sourceArray 中复制开始处的索引</param>
+            <param name="length">要复制的元素数目。</param>
+            <param name="timeout">超时毫秒数。Timout.Infinite即-1为始终等待。</param>
+            <returns>若成功放入则返回true，否则返回false（不放入任何数据）。</returns>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.CircularBuffer`1.Enqueue(`0[],System.Int32)">
+            <summary>
+            向缓冲队列中放入一组数据，若队列中的空间不足，则等待至超时。
+            若等待至超时后队列中的空间仍不足以放入所有数据，则根据forceEnqueue参数决定此时的行为。
+            若成功放入则返回true，否则返回false（不放入任何数据）。
+            </summary>
+            <param name="sourceArray"> 写入数据数据源 </param>
+            <param name="timeout">超时毫秒数。Timout.Infinite即-1为始终等待。</param>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.CircularBuffer`1.ClearAll">
+            <summary>
+            清空循环缓冲区的数据
+            </summary>
+        </member>
+        <member name="T:SeeSharpTools.JXI.Public.Struct.CircularBufferHandle`1">
+            <summary>
+            CircularBuffer的句柄
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Public.Struct.CircularBufferHandle`1.sizeOfT">
+            <summary>
+            T的Size，字节数，创建队列的时候初始化。
+            </summary>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Public.Struct.CircularBufferHandle`1.bufferSize">
+            <summary>
+            缓冲区的大小，元素个数，即实例化时设定的长度。
+            </summary>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Public.Struct.CircularBufferHandle`1.bufferPtr">
+            <summary>
+            缓冲区的指针首地址，创建队列的时候初始化。
+            </summary>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Public.Struct.CircularBufferHandle`1.bufferLock">
+            <summary>
+            对Buffer访问的互斥锁。
+            Buffer 只有 Enqueue ，Dispose 操作会进行写入。
+            Buffer 只有 Dequeue ，GetRawData 操作会进行读取。
+            </summary>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Public.Struct.CircularBufferHandle`1.writePointsCount">
+            <summary>
+            写入buffer的数据总数。
+            对_bufferSize取余就是写指针位置。
+            </summary>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Public.Struct.CircularBufferHandle`1.writePointerLock">
+            <summary>
+            写指针锁。
+            writePointer 只有 Enqueue 操作会进行写入，所有写入必须加锁，指针移动只能单次进行。
+            writePointer 只有 Dequeue ，Clear ，GetNumOfElement ，GetCapacity操作会进行读取。
+            writePointer 是单调递增，所以 Dequeue ，Clear ，GetNumOfElement ， 对 writePointer 不加锁产生的结果影响非负面。
+            </summary>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Public.Struct.CircularBufferHandle`1.readPointers">
+            <summary>
+            队列读指针，相对于缓冲区指针首地址的Index值。
+            </summary>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Public.Struct.CircularBufferHandle`1.readPointersLock">
+            <summary>
+            对_readPointers 列表访问的锁。
+            </summary>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Public.Struct.CircularBufferHandle`1._isDisposed">
+            <summary>
+            要检测冗余调用
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.CircularBufferHandle`1.#ctor(System.Int32)">
+            <summary>
+            构造函数，内部使用
+            </summary>
+            <param name="bufferSize">缓冲区大小</param>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.CircularBufferHandle`1.Dispose">
+            <summary>
+            释放循环缓冲区
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.CircularBufferHandle`1.AddReader(SeeSharpTools.JXI.Public.Struct.CircularBufferReader{`0})">
+            <summary>
+            添加读指针
+            </summary>
+            <param name="reader">  读指针 </param>
+            <returns> 新添加的读指针 </returns>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.CircularBufferHandle`1.RemoveReader(SeeSharpTools.JXI.Public.Struct.CircularBufferReader{`0})">
+            <summary>
+            删除读指针
+            </summary>
+            <param name="reader"> 待删除的读指针 </param>
+            <returns> 删除是否成功 </returns>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.CircularBufferHandle`1.GetRawData(`0[]@)">
+            <summary>
+            获取循环缓冲区的原始顺序数据。
+            </summary>
+            <param name="destinationArray"></param>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.CAPI.memcpy(System.IntPtr,System.IntPtr,System.UIntPtr)">
+            <summary>
+            内存拷贝
+            </summary>
+            <param name="destination"></param>
+            <param name="source"></param>
+            <param name="length"></param>
+        </member>
+        <member name="T:SeeSharpTools.JXI.Public.Struct.WinAPI">
+            <summary>
+            windows api 的函数导入
+            </summary>
+        </member>
+        <member name="T:SeeSharpTools.JXI.Public.Struct.LinuxAPI">
+            <summary>
+            windows api 的函数导入
+            </summary>
+        </member>
+        <member name="T:SeeSharpTools.JXI.Public.Struct.CircularBufEnqueueResult">
+            <summary>
+            CircularBuffer执行Enqueue操作的结果。
+            </summary>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Public.Struct.CircularBufEnqueueResult.NormalEnqueue">
+            <summary>
+            正常Enqueue成功。
+            </summary>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Public.Struct.CircularBufEnqueueResult.Abort">
+            <summary>
+            等待超时后，放弃Enqueue操作。
+            </summary>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Public.Struct.CircularBufEnqueueResult.LossyEnqueue">
+            <summary>
+            等待超时后强制Enqueue，已丢弃最早的数据。
+            </summary>
+        </member>
+        <member name="T:SeeSharpTools.JXI.Public.Struct.CircularBufDequeueResult">
+            <summary>
+            CircularBuffer执行Dequeue操作的结果。
+            </summary>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Public.Struct.CircularBufDequeueResult.NormalDequeue">
+            <summary>
+            正常Dequeue成功。
+            </summary>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Public.Struct.CircularBufDequeueResult.Abort">
+            <summary>
+            等待超时后，放弃Dequeue操作。
+            </summary>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Public.Struct.CircularBufDequeueResult.LossyByOverwritten">
+            <summary>
+            读指针被覆盖，已丢弃最早的数据。
+            </summary>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Public.Struct.CircularBufDequeueResult.LossyBySkipped">
+            <summary>
+            读指针偏移，已丢弃最早的数据。
+            </summary>
+        </member>
+        <member name="T:SeeSharpTools.JXI.Public.Struct.CircularBufReaderType">
+            <summary>
+            CircularBuffer读指针的类型。对应不同的Enqueue操作的表现。
+            </summary>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Public.Struct.CircularBufReaderType.Lossless">
+            <summary>
+             无损Reader，本Reader的未读取数据不能被Circular Buffer的Enqueue操作覆盖，即Enqueue操作时，若Buffer空间不足，须等待本Reader读走数据后才能写入。
+            </summary>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Public.Struct.CircularBufReaderType.Lossy">
+            <summary>
+            有损Reader，本Reader的未读取数据可以被Circular Buffer的Enqueue操作直接覆盖，即Enqueue操作时，若Buffer空间不足，则强制Enqueue无需等待。
+            </summary>
+        </member>
+        <member name="T:SeeSharpTools.JXI.Public.Struct.ValueChangedEventArgs">
+            <summary>
+            参数值改变事件的参数。
+            </summary>
+        </member>
+        <member name="P:SeeSharpTools.JXI.Public.Struct.ValueChangedEventArgs.OldValue">
+            <summary>
+            Old value.
+            </summary>
+        </member>
+        <member name="P:SeeSharpTools.JXI.Public.Struct.ValueChangedEventArgs.NewValue">
+            <summary>
+            New value.
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.ValueChangedEventArgs.#ctor(System.Object,System.Object)">
+            <summary>
+            构造函数。
+            </summary>
+            <param name="oldValue"></param>
+            <param name="newVaue"></param>
+        </member>
+        <member name="T:SeeSharpTools.JXI.Public.Struct.ParamValueChangedEventHandler">
+            <summary>
+            参数改变时的委托。
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:SeeSharpTools.JXI.Public.Struct.TaskDataAvailableEventArgs">
+            <summary>
+            任务数据有效的事件参数。
+            </summary>
+        </member>
+        <member name="P:SeeSharpTools.JXI.Public.Struct.TaskDataAvailableEventArgs.Count">
+            <summary>
+            数据计数。
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.TaskDataAvailableEventArgs.#ctor(System.Int32)">
+            <summary>
+            构造函数。
+            </summary>
+            <param name="count"></param>
+        </member>
+        <member name="T:SeeSharpTools.JXI.Public.Struct.TaskDataAvailableEventHandler">
+            <summary>
+            任务数据更新的委托。
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:SeeSharpTools.JXI.Public.Struct.TaskHeartbeatTriggeredEventArgs">
+            <summary>
+            任务心跳事件的参数。
+            </summary>
+        </member>
+        <member name="P:SeeSharpTools.JXI.Public.Struct.TaskHeartbeatTriggeredEventArgs.Count">
+            <summary>
+            心跳计数器。
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.TaskHeartbeatTriggeredEventArgs.#ctor(System.Int32)">
+            <summary>
+            构造函数。
+            </summary>
+        </member>
+        <member name="T:SeeSharpTools.JXI.Public.Struct.TaskHeartbeatTriggeredEventHandler">
+            <summary>
+            任务心跳时的委托。
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:SeeSharpTools.JXI.Public.Struct.TaskCompletedEventArgs">
+            <summary>
+            任务完成的事件参数。
+            </summary>
+        </member>
+        <member name="P:SeeSharpTools.JXI.Public.Struct.TaskCompletedEventArgs.Error">
+            <summary>
+            任务执行的错误信息。如果任务执行期间发生错误（异常终止），则为实例化的异常类对象，否则为null。
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.TaskCompletedEventArgs.#ctor">
+            <summary>
+            构造函数。
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.TaskCompletedEventArgs.#ctor(System.String,System.Exception)">
+            <summary>
+            构造函数。
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:SeeSharpTools.JXI.Public.Struct.TaskCompletedEventHandler">
+            <summary>
+            任务完成的委托。
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:SeeSharpTools.JXI.Public.Struct.AggregateExceptionOccuredEventArgs">
+            <summary>
+            异步任务（如基于Thread/Task的引擎）执行出现异常的事件参数。
+            </summary>
+        </member>
+        <member name="P:SeeSharpTools.JXI.Public.Struct.AggregateExceptionOccuredEventArgs.Time">
+            <summary>
+            出现异常的时间。
+            </summary>
+        </member>
+        <member name="P:SeeSharpTools.JXI.Public.Struct.AggregateExceptionOccuredEventArgs.TaskName">
+            <summary>
+            出现异常的任务名称。
+            </summary>
+        </member>
+        <member name="P:SeeSharpTools.JXI.Public.Struct.AggregateExceptionOccuredEventArgs.Exception">
+            <summary>
+            异常信息。
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.AggregateExceptionOccuredEventArgs.#ctor(System.DateTime,System.String,System.Exception)">
+            <summary>
+            构造函数。
+            </summary>
+            <param name="time"></param>
+            <param name="taskName"></param>
+            <param name="exception"></param>
+        </member>
+        <member name="T:SeeSharpTools.JXI.Public.Struct.AggregateExceptionOccuredEventHandler">
+            <summary>
+            异步任务（如基于Thread/Task的引擎）执行出现异常时的委托。
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:SeeSharpTools.JXI.Public.Struct.TaskUtility">
+            <summary>
+            Task对象的公共方法。
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Public.Struct.TaskUtility.WaitForEngineComplete(System.Threading.Tasks.Task,System.String,System.Int32)">
+            <summary>
+            等待指定的Task结束运行，若超时则抛出异常。
+            </summary>
+            <param name="engine"></param>
+            <param name="engineName"></param>
+            <param name="timeout"></param>
+        </member>
+        <member name="T:SeeSharpTools.JXI.Numerics.Complex32">
+            <summary>
+            实部和虚部为float类型的复数
+            </summary>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Numerics.Complex32.Zero">
+            <summary>
+            复数 0
+            </summary>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Numerics.Complex32.One">
+            <summary>
+            复数 1
+            </summary>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Numerics.Complex32.ImaginaryOne">
+            <summary>
+            复数 0 + i
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Complex32.#ctor(System.Single,System.Single)">
+            <summary>
+            构造
+            </summary>
+        </member>
+        <member name="P:SeeSharpTools.JXI.Numerics.Complex32.Imaginary">
+            <summary>
+            获取虚部
+            </summary>
+        </member>
+        <member name="P:SeeSharpTools.JXI.Numerics.Complex32.Real">
+            <summary>
+            获取实部
+            </summary>
+        </member>
+        <member name="P:SeeSharpTools.JXI.Numerics.Complex32.Magnitude">
+            <summary>
+            获取幅度
+            </summary>
+        </member>
+        <member name="P:SeeSharpTools.JXI.Numerics.Complex32.MagnitudeSquared">
+            <summary>
+            获取幅度平方
+            </summary>
+        </member>
+        <member name="P:SeeSharpTools.JXI.Numerics.Complex32.Phase">
+            <summary>
+            获取相位
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Complex32.Abs(SeeSharpTools.JXI.Numerics.Complex32)">
+            <summary>
+            获取模
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Complex32.Add(SeeSharpTools.JXI.Numerics.Complex32,SeeSharpTools.JXI.Numerics.Complex32)">
+            <summary>
+            复数求和
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Complex32.Conjugate(SeeSharpTools.JXI.Numerics.Complex32)">
+            <summary>
+            复数共轭
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Complex32.Divide(SeeSharpTools.JXI.Numerics.Complex32,SeeSharpTools.JXI.Numerics.Complex32)">
+            <summary>
+            复数除法
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Complex32.FromPolarCoordinates(System.Double,System.Double)">
+             <summary>
+            从点的极坐标创建复数。
+             </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Complex32.Multiply(SeeSharpTools.JXI.Numerics.Complex32,SeeSharpTools.JXI.Numerics.Complex32)">
+            <summary>
+            复数乘法。
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Complex32.Negate(SeeSharpTools.JXI.Numerics.Complex32)">
+            <summary>
+            复数求逆
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Complex32.Subtract(SeeSharpTools.JXI.Numerics.Complex32,SeeSharpTools.JXI.Numerics.Complex32)">
+            <summary>
+            复数减法
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Complex32.Equals(SeeSharpTools.JXI.Numerics.Complex32)">
+            <summary>
+            当前实例与指定的复数是否具有相同的值。
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Complex32.Equals(System.Object)">
+            <summary>
+            指示当前实例与指定的对象是否具有相同的值。
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Complex32.GetHashCode">
+            <summary>
+            返回当前对象的哈希代码。
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Complex32.ToString(System.String)">
+            <summary>
+             通过对当前复数的实部和虚部使用指定格式，将它的值转换为其采用笛卡尔形式的等效字符串表示形式。
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Complex32.ToString(System.IFormatProvider)">
+            <summary>
+             通过对当前复数的实部和虚部使用指定格式，将它的值转换为其采用笛卡尔形式的等效字符串表示形式。
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Complex32.ToString(System.String,System.IFormatProvider)">
+            <summary>
+             通过对当前复数的实部和虚部使用指定格式，将它的值转换为其采用笛卡尔形式的等效字符串表示形式。
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Complex32.ToString">
+            <summary>
+             通过对当前复数的实部和虚部使用指定格式，将它的值转换为其采用笛卡尔形式的等效字符串表示形式。
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Complex32.op_Addition(SeeSharpTools.JXI.Numerics.Complex32,SeeSharpTools.JXI.Numerics.Complex32)">
+            <summary>
+            复数加法
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Complex32.op_UnaryNegation(SeeSharpTools.JXI.Numerics.Complex32)">
+            <summary>
+            复数加法逆元
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Complex32.op_Subtraction(SeeSharpTools.JXI.Numerics.Complex32,SeeSharpTools.JXI.Numerics.Complex32)">
+            <summary>
+            复数减法
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Complex32.op_Multiply(SeeSharpTools.JXI.Numerics.Complex32,SeeSharpTools.JXI.Numerics.Complex32)">
+            <summary>
+            复数乘法
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Complex32.op_Division(SeeSharpTools.JXI.Numerics.Complex32,SeeSharpTools.JXI.Numerics.Complex32)">
+            <summary>
+            复数除法
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Complex32.op_Equality(SeeSharpTools.JXI.Numerics.Complex32,SeeSharpTools.JXI.Numerics.Complex32)">
+            <summary>
+            复数相等
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Complex32.op_Inequality(SeeSharpTools.JXI.Numerics.Complex32,SeeSharpTools.JXI.Numerics.Complex32)">
+            <summary>
+            复数不等
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Complex32.op_Implicit(System.Double)~SeeSharpTools.JXI.Numerics.Complex32">
+            <summary>
+            double 转换复数
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Complex32.op_Implicit(System.Single)~SeeSharpTools.JXI.Numerics.Complex32">
+            <summary>
+            float 转换复数
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Complex32.op_Implicit(System.Int64)~SeeSharpTools.JXI.Numerics.Complex32">
+            <summary>
+            long 转换复数
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Complex32.op_Implicit(System.Int32)~SeeSharpTools.JXI.Numerics.Complex32">
+            <summary>
+            int 转换复数
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Complex32.op_Implicit(System.Int16)~SeeSharpTools.JXI.Numerics.Complex32">
+            <summary>
+            short 转换复数
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Complex32.op_Explicit(System.Decimal)~SeeSharpTools.JXI.Numerics.Complex32">
+            <summary>
+            decimal 转换复数
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Complex32.op_Explicit(System.Numerics.Complex)~SeeSharpTools.JXI.Numerics.Complex32">
+            <summary>
+            complex 转换复数
+            </summary>
+        </member>
+        <member name="T:SeeSharpTools.JXI.Numerics.Const">
+            <summary>
+            数值常数
+            2022-02-01 来自VST\Digital Signal Processing\Math Utility
+            </summary>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Numerics.Const.I32PhaseScale">
+            <summary>
+            相位因子，将0-2pi 投影到I32范围中，满足相位自动回绕
+            </summary>
+        </member>
+        <member name="F:SeeSharpTools.JXI.Numerics.Const.I16PhaseScale">
+            <summary>
+            相位因子，将0-2pi 投影到 -32768 -- +32767 范围中，满足相位自动回绕
+            </summary>
+        </member>
+        <member name="T:SeeSharpTools.JXI.Numerics.NumericsUtility">
+            <summary>
+            数值类型处理库。
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.NumericsUtility.ConvertComplexIQ(System.Int16[],System.Double,System.Numerics.Complex[])">
+            <summary>
+            将short(I16) interleaved IQ转换为Complex IQ。
+            </summary>
+            <param name="source">I/Q交替（Interleaved）存放的IQ。</param>
+            <param name="scale">转换为Complex时的线性因子，非dB。</param>
+            <param name="destination"></param>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.NumericsUtility.ConvertComplexIQ(System.Numerics.Complex[],System.Double,System.Int16[])">
+            <summary>
+            将Complex IQ转换为short(I16) interleaved IQ。
+            </summary>
+            <param name="source"></param>
+            <param name="scale"></param>
+            <param name="destination"></param>
+        </member>
+        <member name="T:SeeSharpTools.JXI.Numerics.NumericRange">
+            <summary>
+            数值范围类型，包含一对浮点数值Max/Min，提供Coerce(...)，IsInRange(...)等方法。
+            </summary>
+        </member>
+        <member name="P:SeeSharpTools.JXI.Numerics.NumericRange.Max">
+            <summary>
+            最大值
+            </summary>
+        </member>
+        <member name="P:SeeSharpTools.JXI.Numerics.NumericRange.Min">
+            <summary>
+            最小值
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.NumericRange.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.NumericRange.#ctor(System.Double,System.Double)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="min"></param>
+            <param name="max"></param>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.NumericRange.Coerce(System.Double,System.Double@)">
+            <summary>
+            将输入数值限制到[Min, Max]之间
+            </summary>
+            <param name="inputValue"></param>
+            <param name="coercedValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.NumericRange.Coerce(System.Double)">
+            <summary>
+            将输入数值限制到[Min, Max]之间
+            </summary>
+            <param name="inputValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.NumericRange.IsInRange(System.Double)">
+            <summary>
+            判断输入数值是否在[Min, Max]之间
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.NumericRange.CopyFrom(SeeSharpTools.JXI.Numerics.NumericRange)">
+            <summary>
+            复制对象内容。
+            </summary>
+            <param name="source"></param>
+        </member>
+        <member name="T:SeeSharpTools.JXI.Numerics.MathExtension">
+            <summary>
+            Math 扩展
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.MathExtension.Sinc(System.Double)">
+            <summary>
+            Sinc
+            </summary>
+        </member>
+        <member name="P:SeeSharpTools.JXI.Numerics.Vector`1.VectorArray">
+            <summary>
+            向量数据
+            </summary>
+        </member>
+        <member name="P:SeeSharpTools.JXI.Numerics.Vector`1.Size">
+            <summary>
+            向量长度
+            </summary>
+        </member>
+        <member name="P:SeeSharpTools.JXI.Numerics.Vector`1.IsValid">
+            <summary>
+            是否非空
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector`1.GetSubVector(System.Int32,System.Int32)">
+            <summary>
+            获取向量子集
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector`1.SetSubVector(System.Int32,`0[])">
+            <summary>
+            设置矩阵特定阵行
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector`1.#ctor(System.Int32)">
+            <summary>
+            构造
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector`1.#ctor(`0[])">
+            <summary>
+            构造
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector`1.#ctor(SeeSharpTools.JXI.Numerics.Vector{`0})">
+            <summary>
+            构造
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector`1.Zero(System.Int32)">
+            <summary>
+            零向量
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector`1.One(System.Int32)">
+            <summary>
+            全1向量
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector`1.Uint(System.Int32,System.Int32)">
+            <summary>
+            单位向量
+            </summary>
+        </member>
+        <member name="T:SeeSharpTools.JXI.Numerics.Vector">
+            <summary>
+            数组运算
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetMinArrayLenth(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            返回数组操作的最小长度
+            </summary>
+            <param name="aLength"> 数组 a 的长度, 必须大于等于 0 </param>
+            <param name="bLength"> 数组 b 的长度, 必须大于等于 0 </param>
+            <param name="expectedLength"> 期望操作的长度, 小于等于 0 表示该参数无效  </param>
+            <returns></returns>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetMinArrayLenth(System.Int32,System.Int32)">
+            <summary>
+            返回数组操作的最小长度
+            </summary>
+            <param name="aLength"> 数组 a 的长度, 必须大于等于 0 </param>
+            <param name="expectedLength"> 期望操作的长度, 小于等于 0 表示该参数无效 </param>
+            <returns></returns>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAbs``1(``0[])">
+            <summary>
+            数组取模
+            inout = Abs (inout)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAbs``1(``0[],``0[])">
+            <summary>
+            数组取模
+            output = Abs (a)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArrayAbs``1(``0[])">
+            <summary>
+            数组取模
+            return = Abs (a)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAbs(System.Int16[])">
+            <summary>
+            short 数组取模
+            inout = Abs (inout)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAbs(System.Int16[],System.Int16[])">
+            <summary>
+            short 数组取模
+            output = Abs (a)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAbs(System.Int32[])">
+            <summary>
+            I32 数组取模
+            inout = Abs (inout)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAbs(System.Int32[],System.Int32[])">
+            <summary>
+            I32 数组取模
+            output = Abs (a)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAbs(System.Single[])">
+            <summary>
+            float数组取模
+            inout = Abs (inout)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAbs(System.Single[],System.Single[])">
+            <summary>
+            float数组取模
+            output = Abs (a)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAbs(System.Double[])">
+            <summary>
+            double数组取模
+            inout = Abs (inout)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAbs(System.Double[],System.Double[])">
+            <summary>
+            double数组取模
+            output = Abs (a)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAbs(SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            Complex32数组取模
+            inout = Abs (inout)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAbs(SeeSharpTools.JXI.Numerics.Complex32[],SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            Complex32数组取模
+            output = Abs (a)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAbs(System.Numerics.Complex[])">
+            <summary>
+            Complex数组取模
+            inout = Abs (inout)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAbs(System.Numerics.Complex[],System.Numerics.Complex[])">
+            <summary>
+            Complex数组取模
+            output = Abs (a)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAdd``1(``0[],``0[])">
+            <summary>
+            数组加法
+            inout = inout + b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAdd``1(``0[],``0[],``0[])">
+            <summary>
+            数组加法
+            output = a + b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArrayAdd``1(``0[],``0[])">
+            <summary>
+            数组加法
+            return = a + b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAdd(System.Int16[],System.Int16[])">
+            <summary>
+            I16数组加法
+            inout = inout + b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAdd(System.Int16[],System.Int16[],System.Int16[])">
+            <summary>
+            I16数组加法
+            output = a + b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAdd(System.Double[],System.Double[])">
+            <summary>
+            double数组加法
+            inout = inout + b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAdd(System.Double[],System.Double[],System.Double[])">
+            <summary>
+            double数组加法
+            output = a + b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAdd(System.Single[],System.Single[])">
+            <summary>
+            float数组加法
+            inout = inout + b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAdd(System.Single[],System.Single[],System.Single[])">
+            <summary>
+            float数组加法
+            output = a + b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAdd(System.Numerics.Complex[],System.Numerics.Complex[])">
+            <summary>
+            Complex数组加法
+            inout = inout + b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAdd(System.Numerics.Complex[],System.Numerics.Complex[],System.Numerics.Complex[])">
+            <summary>
+            Complex数组加法
+            output = a + b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAdd(SeeSharpTools.JXI.Numerics.Complex32[],SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            Complex32数组加法
+            inout = inout + b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAdd(SeeSharpTools.JXI.Numerics.Complex32[],SeeSharpTools.JXI.Numerics.Complex32[],SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            Complex32数组加法
+            output = a + b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAdd``1(``0[],``0)">
+            <summary>
+            数组加常数
+            inout = inout + b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAdd``1(``0[],``0,``0[])">
+            <summary>
+            数组加常数
+            output = a + b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArrayAdd``1(``0[],``0)">
+            <summary>
+            数组加常数
+            return = a + b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAdd(System.Int16[],System.Int16)">
+            <summary>
+            I16 数组加常数
+            inout = inout + b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAdd(System.Int16[],System.Int16,System.Int16[])">
+            <summary>
+            I16 数组加常数
+            output = a + b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAdd(System.Double[],System.Double)">
+            <summary>
+            double 数组加常数
+            inout = inout + b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAdd(System.Double[],System.Double,System.Double[])">
+            <summary>
+            double 数组加常数
+            output = a + b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAdd(System.Single[],System.Single)">
+            <summary>
+            float 数组加常数
+            inout = inout + b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAdd(System.Single[],System.Single,System.Single[])">
+            <summary>
+            float 数组加常数
+            output = a + b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAdd(System.Numerics.Complex[],System.Numerics.Complex)">
+            <summary>
+            Complex 数组加常数
+            inout = inout + b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAdd(System.Numerics.Complex[],System.Numerics.Complex,System.Numerics.Complex[])">
+            <summary>
+            Complex 数组加常数
+            output = a + b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAdd(SeeSharpTools.JXI.Numerics.Complex32[],SeeSharpTools.JXI.Numerics.Complex32)">
+            <summary>
+            Complex32 数组加常数
+            inout = inout + b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAdd(SeeSharpTools.JXI.Numerics.Complex32[],SeeSharpTools.JXI.Numerics.Complex32,SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            Complex32 数组加常数
+            output = a + b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayEqual``1(``0[],``0[])">
+            <summary>
+            比较 Array 是否相同
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayEqual(System.Int16[],System.Int16[])">
+            <summary>
+            比较 short Array 是否相同
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayEqual(System.Int32[],System.Int32[])">
+            <summary>
+            比较 I32 Array 是否相同
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayEqual(System.Single[],System.Single[])">
+            <summary>
+            比较 float Array 是否相同
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayEqual(System.Double[],System.Double[])">
+            <summary>
+            比较 double Array 是否相同
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayEqual(SeeSharpTools.JXI.Numerics.Complex32[],SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            比较 Complex32 Array 是否相同
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayEqual(System.Numerics.Complex[],System.Numerics.Complex[])">
+            <summary>
+            比较 Complex Array 是否相同
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayLess(System.Double[],System.Double)">
+            <summary>
+            double Array 比固定值小
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayLess(System.Single[],System.Single)">
+            <summary>
+            float Array 比固定值小
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAbsLess(System.Double[],System.Double)">
+            <summary>
+            double Array 的模比固定值小
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAbsLess(System.Single[],System.Single)">
+            <summary>
+            float Array 的模比固定值小
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayGreater(System.Single[],System.Single)">
+            <summary>
+            float Array 比固定值大
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayGreater(System.Double[],System.Double)">
+            <summary>
+            double Array 比固定值大
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.RealImageToComplex``1(System.IntPtr,System.IntPtr,System.IntPtr,System.Int32)">
+            <summary>
+            由实部虚部生成 Complex 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.RealImageToComplex(System.Double[],System.Double[],System.Numerics.Complex[])">
+            <summary>
+            由实部虚部生成 Complex 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.RealImageToComplex(System.Double[],System.Double[])">
+            <summary>
+            由实部虚部生成 Complex 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.RealImageToComplex(System.Single[],System.Single[],SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            由实部虚部生成 Complex32 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.RealImageToComplex(System.Single[],System.Single[])">
+            <summary>
+            由实部虚部生成 Complex32 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.PolarToComplex(System.Double[],System.Double[],System.Numerics.Complex[])">
+            <summary>
+            由幅度相位生成 Complex 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.PolarToComplex(System.Double[],System.Numerics.Complex[])">
+            <summary>
+            由幅度相位生成 Complex 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.PolarToComplex(System.Double[],System.Double[])">
+            <summary>
+            由幅度相位生成 Complex 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.PolarToComplex(System.Double[])">
+            <summary>
+            由幅度相位生成 Complex 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.PolarToComplex(System.Single[],System.Single[],SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            由幅度相位生成 Complex32 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.PolarToComplex(System.Single[],SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            由幅度相位生成 Complex32 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.PolarToComplex(System.Single[],System.Single[])">
+            <summary>
+            由幅度相位生成 Complex32 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.PolarToComplex(System.Single[])">
+            <summary>
+            由幅度相位生成 Complex32 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ComplexConjugate(System.Numerics.Complex[])">
+            <summary>
+            获取 Complex 共轭
+            inout = conj (inout)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ComplexConjugate(System.Numerics.Complex[],System.Numerics.Complex[])">
+            <summary>
+            获取 Complex 共轭
+            output = conj (a)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexConjugation(System.Numerics.Complex[])">
+            <summary>
+            获取 Complex 共轭
+            renture = conj (a)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ComplexConjugate(SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            获取 Complex32 共轭
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ComplexConjugate(SeeSharpTools.JXI.Numerics.Complex32[],SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            获取 Complex32 共轭
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexConjugation(SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            获取 Complex32 共轭
+            renture = conj (a)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexReal(System.Numerics.Complex[],System.Double[])">
+            <summary>
+            获取 Complex 数组实部
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexReal(System.Numerics.Complex[])">
+            <summary>
+            获取 Complex 数组实部
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexReal(SeeSharpTools.JXI.Numerics.Complex32[],System.Single[])">
+            <summary>
+            获取 Complex32 数组实部
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexReal(SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            获取 Complex32 数组实部
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexImage(System.Numerics.Complex[],System.Double[])">
+            <summary>
+            获取 Complex 数组虚部
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexImage(System.Numerics.Complex[])">
+            <summary>
+            获取 Complex 数组虚部
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexImage(SeeSharpTools.JXI.Numerics.Complex32[],System.Single[])">
+            <summary>
+            获取 Complex32 数组虚部
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexImage(SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            获取 Complex32 数组虚部
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ComplexToRealImage(System.Numerics.Complex[],System.Double[],System.Double[])">
+            <summary>
+            获取 Complex 数组实部虚部
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ComplexToRealImage(SeeSharpTools.JXI.Numerics.Complex32[],System.Single[],System.Single[])">
+            <summary>
+            获取 Complex32 数组实部虚部
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ComplexToRealImage(System.Double[],System.Double[],System.Double[],System.Double[])">
+            <summary>
+            获取 Complex 数组实部虚部
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ComplexToRealImage(System.Single[],System.Single[],System.Single[],System.Single[])">
+            <summary>
+            获取 Complex32 数组实部虚部
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexMagnitude(System.Numerics.Complex[],System.Double[])">
+            <summary>
+            获取 Complex 数组幅度
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexMagnitude(System.Numerics.Complex[])">
+            <summary>
+            获取 Complex 数组幅度
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexMagnitude(SeeSharpTools.JXI.Numerics.Complex32[],System.Single[])">
+            <summary>
+            获取 Complex32 数组幅度
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexMagnitude(SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            获取 Complex32 数组幅度
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexMagnitude(System.Double[],System.Double[],System.Double[])">
+            <summary>
+            Complex 数组幅度
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexMagnitude(System.Double[],System.Double[])">
+            <summary>
+            Complex 数组幅度
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexMagnitude(System.Single[],System.Single[],System.Single[])">
+            <summary>
+            Complex32 数组幅度
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexMagnitude(System.Single[],System.Single[])">
+            <summary>
+            Complex32 数组幅度
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexPhase(System.Numerics.Complex[],System.Double[])">
+            <summary>
+            获取 Complex 数组相位
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexPhase(System.Numerics.Complex[])">
+            <summary>
+            获取 Complex 数组相位
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexPhase(SeeSharpTools.JXI.Numerics.Complex32[],System.Single[])">
+            <summary>
+            获取 Complex 数组相位
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexPhase(SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            获取 Complex32 数组相位
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexPhase(System.Double[],System.Double[],System.Double[])">
+            <summary>
+            获取 Complex 数组相位
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexPhase(System.Double[],System.Double[])">
+            <summary>
+            获取 Complex 数组相位
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexPhase(System.Single[],System.Single[],System.Single[])">
+            <summary>
+            获取 Complex32 数组相位
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexPhase(System.Single[],System.Single[])">
+            <summary>
+            获取 Complex32 数组相位
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ComplexToMagitudePhase(System.Numerics.Complex[],System.Double[],System.Double[])">
+            <summary>
+            获取 Complex 数组幅度相位
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ComplexToMagitudePhase(SeeSharpTools.JXI.Numerics.Complex32[],System.Single[],System.Single[])">
+            <summary>
+            获取 Complex32 数组幅度相位
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ComplexToMagitudePhase(System.Double[],System.Double[],System.Double[],System.Double[])">
+            <summary>
+            获取 Complex 数组幅度相位
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ComplexToMagitudePhase(System.Single[],System.Single[],System.Single[],System.Single[])">
+            <summary>
+            获取 Complex32 数组幅度相位
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexPower(System.Numerics.Complex[],System.Double[])">
+            <summary>
+            Complex 数组取模的平方（即功率）
+            power = a.Re * a.Re + a.Im * a.Im
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexPower(System.Numerics.Complex[])">
+            <summary>
+            Complex 数组取模的平方（即功率）
+            power = a.Re * a.Re + a.Im * a.Im
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexPower(SeeSharpTools.JXI.Numerics.Complex32[],System.Single[])">
+            <summary>
+            Complex32 数组取模的平方（即功率）
+            power = a.Re * a.Re + a.Im * a.Im
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexPower(SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            Complex32 数组取模的平方（即功率）
+            power = a.Re * a.Re + a.Im * a.Im
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexPower(System.Double[],System.Double[],System.Double[])">
+            <summary>
+            Complex 数组取模的平方（即功率）
+            power = real * real + image * image
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexPower(System.Double[],System.Double[])">
+            <summary>
+            Complex 数组取模的平方（即功率）
+            power = a.Re * a.Re + a.Im * a.Im
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexPower(System.Single[],System.Single[],System.Single[])">
+            <summary>
+            Complex32 数组取模的平方（即功率）
+            power = real * real + image * image
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexPower(System.Single[],System.Single[])">
+            <summary>
+            Complex32 数组取模的平方（即功率）
+            power = a.Re * a.Re + a.Im * a.Im
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexAvgPower(System.Numerics.Complex[])">
+            <summary>
+            Complex 数组平均功率
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetComplexAvgPower(SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            Complex32 数组平均功率
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayConvert(System.Int16[],System.Int32[])">
+            <summary>
+            将 short 数组转换为 int 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayConvert(System.Int16[],System.Single[])">
+            <summary>
+            将 short 数组转换为 float 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayConvert(System.Int32[],System.Single[])">
+            <summary>
+            将 int 数组转换为 float 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayConvert(System.Int32[],System.Double[])">
+            <summary>
+            将 int 数组转换为 double 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayConvert(System.Single[],System.Double[])">
+            <summary>
+            将 float 数组转换为 double 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayConvert(System.Double[],System.Single[])">
+            <summary>
+            将 double 数组转换为 float 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayConvert(System.Double[],System.Int32[])">
+            <summary>
+            将 double 数组转换为 int 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayConvert(System.Single[],System.Int32[])">
+            <summary>
+            将 float 数组转换为 int 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayConvert(System.Single[],System.Int16[])">
+            <summary>
+            将 float 数组转换为 short 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayConvert(System.Int32[],System.Int16[])">
+            <summary>
+            将 int 数组转换为 short 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayConvert(System.Int16[],SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            将 short 数组转换为 Complex32 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayConvert(SeeSharpTools.JXI.Numerics.Complex32[],System.Numerics.Complex[])">
+            <summary>
+            将 Complex32 数组转换为 Complex 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayConvert(System.Numerics.Complex[],SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            将 Complex 数组转换为 Complex32 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayConvert(SeeSharpTools.JXI.Numerics.Complex32[],System.Int16[])">
+            <summary>
+            将 Complex32 数组转换为short数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToShort(System.Int32[])">
+            <summary>
+            将 I32 数组转换为 I16 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToShort(System.Int32[],System.Int16[])">
+            <summary>
+            将 I32 数组转换为 I16 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToShort(System.Single[])">
+            <summary>
+            将 float 数组转换为 I16 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToShort(System.Single[],System.Int16[])">
+            <summary>
+            将 float 数组转换为 I16 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToShort(SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            将 Complex32 数组转换为 I16 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToShort(SeeSharpTools.JXI.Numerics.Complex32[],System.Int16[])">
+            <summary>
+            将 Complex32 数组转换为 I16 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToInt(System.Double[])">
+            <summary>
+            将 double 数组转换为 I32 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToInt(System.Double[],System.Int32[])">
+            <summary>
+            将 double 数组转换为 I32 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToInt(System.Single[])">
+            <summary>
+            将 float 数组转换为 int 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToInt(System.Single[],System.Int32[])">
+            <summary>
+            将 float 数组转换为 int 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToInt(System.Int16[])">
+            <summary>
+            将 I16 数组转换为 I32 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToInt(System.Int16[],System.Int32[])">
+            <summary>
+            将 I16 数组转换为 float 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToFloat(System.Int16[])">
+            <summary>
+            将 I16 数组转换为 float 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToFloat(System.Int16[],System.Single[])">
+            <summary>
+            将 I16 数组转换为 float 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToFloat(System.Int32[])">
+            <summary>
+            将 I32 数组转换为 float 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToFloat(System.Int32[],System.Single[])">
+            <summary>
+            将 I32 数组转换为 float 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToFloat(System.Double[])">
+            <summary>
+            将 double 数组转换为 float 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToFloat(System.Double[],System.Single[])">
+            <summary>
+            将 double 数组转换为 float 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToDouble(System.Int32[])">
+            <summary>
+            将 I32 数组转换为 double 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToDouble(System.Int32[],System.Double[])">
+            <summary>
+            将 I32 数组转换为 double 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToDouble(System.Single[])">
+            <summary>
+            将 float 数组转换为 double 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToDouble(System.Single[],System.Double[])">
+            <summary>
+            将 float 数组转换为 double 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToComplex(SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            将 Complex32 数组转换为 Complex 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToComplex(SeeSharpTools.JXI.Numerics.Complex32[],System.Numerics.Complex[])">
+            <summary>
+            将 Complex32 数组转换为 Complex 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToComplex(System.Double[])">
+            <summary>
+            将 double 数组转换为 Complex 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToComplex(System.Double[],System.Numerics.Complex[])">
+            <summary>
+            将 double 数组转换为 Complex 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToComplex32(System.Numerics.Complex[])">
+            <summary>
+            将 Complex 数组转换为 Complex32 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToComplex32(System.Numerics.Complex[],SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            将 Complex 数组转换为 Complex32 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToComplex32(System.Int16[])">
+            <summary>
+            将 short 数组转换为 Complex32 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToComplex32(System.Int16[],SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            将 short 数组转换为 Complex32 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToComplex32(System.Single[])">
+            <summary>
+            将 float 数组转换为 Complex32 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConvertToComplex32(System.Single[],SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            将 float 数组转换为 Complex32 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayRotate``1(``0[],``0[],System.Int32)">
+            <summary>
+            数组旋转模板
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayRotate``1(``0[],System.Int32)">
+            <summary>
+            数组旋转模板
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy``1(``0[],``0[])">
+            <summary>
+            数组拷贝模板
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy``1(``0[],System.Int32,``0[],System.Int32,System.Int32)">
+            <summary>
+            数组拷贝模板
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy``1(``0[0:,0:],``0[0:,0:])">
+            <summary>
+            二维数组拷贝模板
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy``1(``0[],System.IntPtr)">
+            <summary>
+            数组拷贝模板
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy``1(``0[],System.IntPtr,System.Int32,System.Int32)">
+            <summary>
+            数组拷贝模板
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy``1(System.IntPtr,``0[])">
+            <summary>
+            数组拷贝模板
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy``1(System.IntPtr,``0[],System.Int32,System.Int32)">
+            <summary>
+            数组拷贝模板
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy``1(``0[0:,0:],System.IntPtr)">
+            <summary>
+            数组拷贝模板
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy``1(System.IntPtr,``0[0:,0:])">
+            <summary>
+            数组拷贝模板
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy``1(``0[],System.Byte[])">
+            <summary>
+            数组拷贝模板
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy``1(System.Byte[],``0[])">
+            <summary>
+            数组拷贝模板
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy``1(System.IntPtr,System.IntPtr,System.Int32)">
+            <summary>
+            数组拷贝模板
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Byte[],System.Byte[])">
+            <summary>
+            byte 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Byte[],System.Int32,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            byte 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Byte[0:,0:],System.Byte[0:,0:])">
+            <summary>
+            二维 byte 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.IntPtr,System.Byte[])">
+            <summary>
+            byte 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.IntPtr,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            byte 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.IntPtr,System.Byte[0:,0:])">
+            <summary>
+            byte 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Byte[],System.IntPtr)">
+            <summary>
+            byte 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Byte[],System.IntPtr,System.Int32,System.Int32)">
+            <summary>
+            byte 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Byte[0:,0:],System.IntPtr)">
+            <summary>
+            byte 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Int16[],System.Int16[])">
+            <summary>
+            short 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Int16[],System.Int32,System.Int16[],System.Int32,System.Int32)">
+            <summary>
+            short 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Int16[0:,0:],System.Int16[0:,0:])">
+            <summary>
+            二维 short 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.IntPtr,System.Int16[])">
+            <summary>
+            short 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.IntPtr,System.Int16[],System.Int32,System.Int32)">
+            <summary>
+            short 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.IntPtr,System.Int16[0:,0:])">
+            <summary>
+            short 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Int16[],System.IntPtr)">
+            <summary>
+            short 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Int16[],System.IntPtr,System.Int32,System.Int32)">
+            <summary>
+            short 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Int16[0:,0:],System.IntPtr)">
+            <summary>
+            short 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Int32[],System.Int32[])">
+            <summary>
+            I32 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Int32[],System.Int32,System.Int32[],System.Int32,System.Int32)">
+            <summary>
+            I32 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Int32[0:,0:],System.Int32[0:,0:])">
+            <summary>
+            二维 I32 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.IntPtr,System.Int32[])">
+            <summary>
+            I32 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.IntPtr,System.Int32[],System.Int32,System.Int32)">
+            <summary>
+            I32 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.IntPtr,System.Int32[0:,0:])">
+            <summary>
+            I32 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Int32[],System.IntPtr)">
+            <summary>
+            I32 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Int32[],System.IntPtr,System.Int32,System.Int32)">
+            <summary>
+            I32 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Int32[0:,0:],System.IntPtr)">
+            <summary>
+            I32 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Double[],System.Double[])">
+            <summary>
+            double 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Double[],System.Int32,System.Double[],System.Int32,System.Int32)">
+            <summary>
+            double 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Double[0:,0:],System.Double[0:,0:])">
+            <summary>
+            二维 double 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Double[],System.IntPtr)">
+            <summary>
+            double 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Double[],System.IntPtr,System.Int32,System.Int32)">
+            <summary>
+            double 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Double[0:,0:],System.IntPtr)">
+            <summary>
+            double 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.IntPtr,System.Double[])">
+            <summary>
+            double 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.IntPtr,System.Double[],System.Int32,System.Int32)">
+            <summary>
+            double 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.IntPtr,System.Double[0:,0:])">
+            <summary>
+            double 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Single[],System.Single[])">
+            <summary>
+            float 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Single[],System.Int32,System.Single[],System.Int32,System.Int32)">
+            <summary>
+            float 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Single[0:,0:],System.Single[0:,0:])">
+            <summary>
+            二维 float 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Single[],System.IntPtr)">
+            <summary>
+            float 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Single[],System.IntPtr,System.Int32,System.Int32)">
+            <summary>
+            float 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Single[0:,0:],System.IntPtr)">
+            <summary>
+            float 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.IntPtr,System.Single[])">
+            <summary>
+            float 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.IntPtr,System.Single[],System.Int32,System.Int32)">
+            <summary>
+            float 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.IntPtr,System.Single[0:,0:])">
+            <summary>
+            float 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Numerics.Complex[],System.Numerics.Complex[])">
+            <summary>
+            Complex 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Numerics.Complex[],System.Int32,System.Numerics.Complex[],System.Int32,System.Int32)">
+            <summary>
+            Complex 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Numerics.Complex[0:,0:],System.Numerics.Complex[0:,0:])">
+            <summary>
+            二维 Complex 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Numerics.Complex[],System.IntPtr,System.Int32,System.Int32)">
+            <summary>
+            Complex 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.Numerics.Complex[0:,0:],System.IntPtr)">
+            <summary>
+            Complex 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.IntPtr,System.Numerics.Complex[],System.Int32,System.Int32)">
+            <summary>
+            Complex 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.IntPtr,System.Numerics.Complex[0:,0:])">
+            <summary>
+            Complex 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(SeeSharpTools.JXI.Numerics.Complex32[],SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            Complex32 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(SeeSharpTools.JXI.Numerics.Complex32[],System.Int32,SeeSharpTools.JXI.Numerics.Complex32[],System.Int32,System.Int32)">
+            <summary>
+            Complex32 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(SeeSharpTools.JXI.Numerics.Complex32[0:,0:],SeeSharpTools.JXI.Numerics.Complex32[0:,0:])">
+            <summary>
+            二维 Complex32 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(SeeSharpTools.JXI.Numerics.Complex32[],System.IntPtr,System.Int32,System.Int32)">
+            <summary>
+            Complex32 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(SeeSharpTools.JXI.Numerics.Complex32[0:,0:],System.IntPtr)">
+            <summary>
+            Complex32 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.IntPtr,SeeSharpTools.JXI.Numerics.Complex32[],System.Int32,System.Int32)">
+            <summary>
+            Complex32 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayCopy(System.IntPtr,SeeSharpTools.JXI.Numerics.Complex32[0:,0:])">
+            <summary>
+            Complex32 数组拷贝
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDivision``1(``0[],``0[])">
+            <summary>
+            数组除法
+            inout = inout / b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDivision``1(``0[],``0[],``0[])">
+            <summary>
+            数组除法
+            output = a / b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArrayDivision``1(``0[],``0[])">
+            <summary>
+            数组除法
+            return = a / b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDivision(System.Double[],System.Double[])">
+            <summary>
+            double 数组除法
+            inout = inout / b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDivision(System.Double[],System.Double[],System.Double[])">
+            <summary>
+            double 数组除法
+            output = a / b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDivision(System.Single[],System.Single[])">
+            <summary>
+            float 数组除法
+            inout = inout / b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDivision(System.Single[],System.Single[],System.Single[])">
+            <summary>
+            float 数组除法
+            output = a / b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDivision(System.Numerics.Complex[],System.Numerics.Complex[])">
+            <summary>
+            Complex 数组除法
+            inout = inout / b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDivision(System.Numerics.Complex[],System.Numerics.Complex[],System.Numerics.Complex[])">
+            <summary>
+            Complex 数组除法
+            output = a / b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDivision(SeeSharpTools.JXI.Numerics.Complex32[],SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            Complex32 数组除法
+            inout = inout / b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDivision(SeeSharpTools.JXI.Numerics.Complex32[],SeeSharpTools.JXI.Numerics.Complex32[],SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            Complex32 数组除法
+            output = a / b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayProductSum(System.Single[],System.Single[])">
+            <summary>
+            对 float 数组求点积
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayProductSum(System.Single[],System.Int32,System.Single[],System.Int32,System.Int32)">
+            <summary>
+            对 float 数组求点积
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayProductSum(System.Double[],System.Double[])">
+            <summary>
+            对 double 数组求点积
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayProductSum(System.Double[],System.Int32,System.Double[],System.Int32,System.Int32)">
+            <summary>
+            对 double 数组求点积
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayProductSum(SeeSharpTools.JXI.Numerics.Complex32[],SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            对 Complex32 数组乘积之和
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayProductSum(SeeSharpTools.JXI.Numerics.Complex32[],System.Int32,SeeSharpTools.JXI.Numerics.Complex32[],System.Int32,System.Int32)">
+            <summary>
+            对 Complex32 数组乘积之和
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayProductSum(System.Numerics.Complex[],System.Numerics.Complex[])">
+            <summary>
+            对 Complex 数组求点积
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayProductSum(System.Numerics.Complex[],System.Int32,System.Numerics.Complex[],System.Int32,System.Int32)">
+            <summary>
+            对 Complex 数组求点积
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDotProduct(SeeSharpTools.JXI.Numerics.Complex32[],System.Single[])">
+            <summary>
+            对 Complex32 数组 和 float 数组 求乘积之和
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayProductSum(SeeSharpTools.JXI.Numerics.Complex32[],System.Int32,System.Single[],System.Int32,System.Int32)">
+            <summary>
+            对 Complex32 数组 和 float 数组 求乘积之和
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDotProduct(System.Numerics.Complex[],System.Double[])">
+            <summary>
+            对 Complex 数组 和 double 数组 求乘积之和
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayProductSum(System.Numerics.Complex[],System.Int32,System.Double[],System.Int32,System.Int32)">
+            <summary>
+            对 Complex 数组 和 double 数组 求乘积之和
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDotProduct(SeeSharpTools.JXI.Numerics.Complex32[],SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            对 Complex32 数组求点积
+            return =  a dotProduct b*
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDotProduct(SeeSharpTools.JXI.Numerics.Complex32[],System.Int32,SeeSharpTools.JXI.Numerics.Complex32[],System.Int32,System.Int32)">
+            <summary>
+            对 Complex32 数组求点积
+            return =  a dotProduct b*
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDotProduct(System.Numerics.Complex[],System.Numerics.Complex[])">
+            <summary>
+            对 Complex 数组求点积
+            return =  a dotProduct b*
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDotProduct(System.Numerics.Complex[],System.Int32,System.Numerics.Complex[],System.Int32,System.Int32)">
+            <summary>
+            对 Complex 数组求点积
+            return =  a dotProduct b*
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMax``1(``0[],``0[])">
+            <summary>
+             获取两个数组对应 index 上较大的那个数据 
+             inout = max (inout, b)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMax``1(``0[],``0[],``0[])">
+            <summary>
+             获取两个数组对应 index 上较大的那个数据 
+             output = max (a,b)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArrayMax``1(``0[],``0[])">
+            <summary>
+             获取两个数组对应 index 上较大的那个数据 
+             return = max (a,b)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMax(System.Int16[],System.Int16[])">
+            <summary>
+             获取两个 I16 数组对应 index 上较大的那个数据 
+             inout = max (inout, b)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMax(System.Int16[],System.Int16[],System.Int16[])">
+            <summary>
+             获取两个 I16 数组对应 index 上较大的那个数据 
+             output = max (a,b)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArrayMax(System.Int16[],System.Int16[])">
+            <summary>
+             获取两个 I16 数组对应 index 上较大的那个数据 
+             return = max (a,b)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMax(System.Int32[],System.Int32[])">
+            <summary>
+             获取两个 I32 数组对应 index 上较大的那个数据 
+             inout = max (inout, b)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMax(System.Int32[],System.Int32[],System.Int32[])">
+            <summary>
+             获取两个 I32 数组对应 index 上较大的那个数据 
+             output = max (a,b)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArrayMax(System.Int32[],System.Int32[])">
+            <summary>
+             获取两个 I32 数组对应 index 上较大的那个数据 
+             return = max (a,b)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMax(System.Double[],System.Double[])">
+            <summary>
+             获取两个 double 数组对应 index 上较大的那个数据 
+             inout = max (inout, b)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMax(System.Double[],System.Double[],System.Double[])">
+            <summary>
+             获取两个 double 数组对应 index 上较大的那个数据 
+             output = max (a,b)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArrayMax(System.Double[],System.Double[])">
+            <summary>
+             获取两个 double 数组对应 index 上较大的那个数据 
+             return = max (a,b)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMax(System.Single[],System.Single[])">
+            <summary>
+             获取两个 float 数组对应 index 上较大的那个数据 
+             inout = max (inout, b)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMax(System.Single[],System.Single[],System.Single[])">
+            <summary>
+             获取两个 float 数组对应 index 上较大的那个数据 
+             output = max (a,b)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArrayMax(System.Single[],System.Single[])">
+            <summary>
+             获取两个 float 数组对应 index 上较大的那个数据 
+             return = max (a,b)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMin``1(``0[],``0[])">
+            <summary>
+             获取两个数组对应 index 上较小的那个数据 
+             inout =  min (inout ,b)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMin``1(``0[],``0[],``0[])">
+            <summary>
+             获取两个数组对应 index 上较小的那个数据 
+             output = min (a, b)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArrayMin``1(``0[],``0[])">
+            <summary>
+             获取两个数组对应 index 上较小的那个数据 
+             return = min (a, b)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMin(System.Int16[],System.Int16[])">
+            <summary>
+             获取两个 I16 数组对应 index 上较小的那个数据 
+             inout =  min (inout ,b)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMin(System.Int16[],System.Int16[],System.Int16[])">
+            <summary>
+             获取两个 I16 数组对应 index 上较小的那个数据 
+             output = min (a, b)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArrayMin(System.Int16[],System.Int16[])">
+            <summary>
+             获取两个 I16 数组对应 index 上较小的那个数据 
+             return = min (a, b)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMin(System.Int32[],System.Int32[])">
+            <summary>
+             获取两个 I32 数组对应 index 上较小的那个数据 
+             inout =  min (inout ,b)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMin(System.Int32[],System.Int32[],System.Int32[])">
+            <summary>
+             获取两个 I32 数组对应 index 上较小的那个数据 
+             output = min (a, b)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArrayMin(System.Int32[],System.Int32[])">
+            <summary>
+             获取两个 I32 数组对应 index 上较小的那个数据 
+             return = min (a, b)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMin(System.Double[],System.Double[])">
+            <summary>
+             获取两个 double 数组对应 index 上较小的那个数据 
+             inout =  min (inout ,b)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMin(System.Double[],System.Double[],System.Double[])">
+            <summary>
+             获取两个 double 数组对应 index 上较小的那个数据 
+             output = min (a, b)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArrayMin(System.Double[],System.Double[])">
+            <summary>
+             获取两个 double 数组对应 index 上较小的那个数据 
+             return = min (a, b)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMin(System.Single[],System.Single[])">
+            <summary>
+             获取两个 float 数组对应 index 上较小的那个数据 
+             inout = min (inout, b)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMin(System.Single[],System.Single[],System.Single[])">
+            <summary>
+             获取两个 float 数组对应 index 上较小的那个数据 
+             output = min (a,b)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArrayMin(System.Single[],System.Single[])">
+            <summary>
+             获取两个 float 数组对应 index 上较小的那个数据 
+             return = min (a, b)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMax(System.Int16[],System.Int16@,System.Int32@)">
+            <summary>
+             获取short 数组最大值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMax(System.Int16[])">
+            <summary>
+             获取 short 数组最大值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMax(System.Int16[],System.Int16@,System.Int32@,System.Int32,System.Int32)">
+            <summary>
+             short 数组最大值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMax(System.Int16[],System.Int32,System.Int32)">
+            <summary>
+             获取 short 数组最大值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMax(System.Int32[],System.Int32@,System.Int32@)">
+            <summary>
+             获取int 数组最大值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMax(System.Int32[])">
+            <summary>
+             获取 int 数组最大值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMax(System.Int32[],System.Int32@,System.Int32@,System.Int32,System.Int32)">
+            <summary>
+             int 数组最大值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMax(System.Int32[],System.Int32,System.Int32)">
+            <summary>
+             获取 int 数组最大值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMax(System.Single[],System.Single@,System.Int32@)">
+            <summary>
+             获取float 数组最大值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMax(System.Single[])">
+            <summary>
+             获取 float 数组最大值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMax(System.Single[],System.Single@,System.Int32@,System.Int32,System.Int32)">
+            <summary>
+             float 数组最大值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMax(System.Single[],System.Int32,System.Int32)">
+            <summary>
+             获取 float 数组最大值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMax(System.Double[],System.Double@,System.Int32@)">
+            <summary>
+             获取double 数组最大值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMax(System.Double[])">
+            <summary>
+             获取 double 数组最大值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMax(System.Double[],System.Double@,System.Int32@,System.Int32,System.Int32)">
+            <summary>
+             获取double 数组最大值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMax(System.Double[],System.Int32,System.Int32)">
+            <summary>
+             获取 double 数组最大值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMin(System.Int16[],System.Int16@,System.Int32@)">
+            <summary>
+             获取short 数组最小值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMin(System.Int16[])">
+            <summary>
+             获取 short 数组最小值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMin(System.Int16[],System.Int16@,System.Int32@,System.Int32,System.Int32)">
+            <summary>
+             获取 short 数组最小值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMin(System.Int16[],System.Int32,System.Int32)">
+            <summary>
+             获取 short 数组最小值  
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMin(System.Int32[],System.Int32@,System.Int32@)">
+            <summary>
+             获取 int 数组最小值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMin(System.Int32[])">
+            <summary>
+             获取 int 数组最小值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMin(System.Int32[],System.Int32@,System.Int32@,System.Int32,System.Int32)">
+            <summary>
+             获取 int 数组最小值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMin(System.Int32[],System.Int32,System.Int32)">
+            <summary>
+             获取 int 数组最小值  
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMin(System.Single[],System.Single@,System.Int32@)">
+            <summary>
+             获取float 数组最小值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMin(System.Single[])">
+            <summary>
+             获取 float 数组最小值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMin(System.Single[],System.Single@,System.Int32@,System.Int32,System.Int32)">
+            <summary>
+             获取 float 数组最小值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMin(System.Single[],System.Int32,System.Int32)">
+            <summary>
+             获取 float 数组最小值  
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMin(System.Double[],System.Double@,System.Int32@)">
+            <summary>
+             获取double 数组最小值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMin(System.Double[])">
+            <summary>
+             获取 double 数组最小值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMin(System.Double[],System.Double@,System.Int32@,System.Int32,System.Int32)">
+            <summary>
+             获取 double 数组最小值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMin(System.Double[],System.Int32,System.Int32)">
+            <summary>
+             获取 double 数组最小值  
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMaxMin(System.Int16[],System.Int16@,System.Int32@,System.Int16@,System.Int32@)">
+            <summary>
+             获取 short 数组最大最小值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMaxMin(System.Int16[],System.Int16@,System.Int32@,System.Int16@,System.Int32@,System.Int32,System.Int32)">
+            <summary>
+             获取 short 数组最大最小值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMaxMin(System.Int32[],System.Int32@,System.Int32@,System.Int32@,System.Int32@)">
+            <summary>
+             获取 int 数组最大最小值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMaxMin(System.Int32[],System.Int32@,System.Int32@,System.Int32@,System.Int32@,System.Int32,System.Int32)">
+            <summary>
+             获取 int 数组最大最小值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMaxMin(System.Single[],System.Single@,System.Int32@,System.Single@,System.Int32@)">
+            <summary>
+             获取 float 数组最大最小值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMaxMin(System.Single[],System.Single@,System.Int32@,System.Single@,System.Int32@,System.Int32,System.Int32)">
+            <summary>
+             获取 float 数组最大最小值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMaxMin(System.Double[],System.Double@,System.Int32@,System.Double@,System.Int32@)">
+            <summary>
+             获取 double 数组最大最小值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayFindMaxMin(System.Double[],System.Double@,System.Int32@,System.Double@,System.Int32@,System.Int32,System.Int32)">
+            <summary>
+             获取 double 数组最大最小值 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMean(System.Single[])">
+            <summary>
+            对 float 数组求平均
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMean(System.Single[],System.Int32,System.Int32)">
+            <summary>
+            对 float 数组求平均
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMean(System.Double[])">
+            <summary>
+            对 double 数组求平均
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMean(System.Double[],System.Int32,System.Int32)">
+            <summary>
+            对 double 数组求平均
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMean(SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            对 Complex32 数组求平均
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMean(SeeSharpTools.JXI.Numerics.Complex32[],System.Int32,System.Int32)">
+            <summary>
+            对 Complex32 数组求平均
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMean(System.Numerics.Complex[])">
+            <summary>
+            对 Complex 数组求平均
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMean(System.Numerics.Complex[],System.Int32,System.Int32)">
+            <summary>
+            对 Complex 数组求平均
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayPhaseMean(System.Single[])">
+            <summary>
+            对 float 相位数组求平均
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayPhaseMeanWeight(System.Single[],System.Single@,System.Single@)">
+            <summary>
+            对 float 相位数组求平均, 向量和
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayPhaseMean(System.Double[])">
+            <summary>
+            对 double 相位数组求平均
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayPhaseMeanWeight(System.Double[],System.Double@,System.Double@)">
+            <summary>
+            对 double 相位数组求平均, 向量和
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayScale``1(``0[],``0)">
+            <summary>
+            数组乘以常数
+            inout = inout * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayScale``1(``0[],``0,``0[])">
+            <summary>
+            数组乘以常数
+            output = a * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArrayScale``1(``0[],``0)">
+            <summary>
+            数组乘以常数
+            output = a * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayScale``1(System.IntPtr,``0,System.Int32)">
+            <summary>
+            数组拷贝模板
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayScale``1(``0[],System.Double)">
+            <summary>
+            数组乘以常数
+            inout = inout * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayScale``1(``0[],System.Double,``0[])">
+            <summary>
+            数组乘以常数
+            output = a * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArrayScale``1(``0[],System.Double)">
+            <summary>
+            数组乘以常数
+            output = a * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayScale(System.Int16[],System.Int16)">
+            <summary>
+            I16 数组乘以常数
+            inout = inout * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayScale(System.Int16[],System.Int16,System.Int16[])">
+            <summary>
+            I16 数组乘以常数
+            output = a * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayScale(System.IntPtr,System.Int16,System.Int32)">
+            <summary>
+            I16 数组乘以常数
+            inout = inout * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayScale(System.Single[],System.Single)">
+            <summary>
+            float数组乘以常数
+            inout = inout * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayScale(System.Single[],System.Single,System.Single[])">
+            <summary>
+            float数组乘以常数
+            output = a * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayScale(System.IntPtr,System.Single,System.Int32)">
+            <summary>
+            float数组乘以常数
+            inout = inout * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayScale(System.Double[],System.Double)">
+            <summary>
+            double数组乘以常数
+            inout = inout * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayScale(System.Double[],System.Double,System.Double[])">
+            <summary>
+            double数组乘以常数
+            output = a * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayScale(System.IntPtr,System.Double,System.Int32)">
+            <summary>
+            double数组乘以常数
+            inout = inout * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayScale(SeeSharpTools.JXI.Numerics.Complex32[],SeeSharpTools.JXI.Numerics.Complex32)">
+            <summary>
+            Comple32数组乘以常数
+            inout = inout * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayScale(SeeSharpTools.JXI.Numerics.Complex32[],SeeSharpTools.JXI.Numerics.Complex32,SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            Comple32数组乘以常数
+            output = a * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayScale(System.IntPtr,SeeSharpTools.JXI.Numerics.Complex32,System.Int32)">
+            <summary>
+            Comple32数组乘以常数
+            inout = inout * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayScale(System.Numerics.Complex[],System.Numerics.Complex)">
+            <summary>
+            Complex数组乘以常数
+            inout = inout * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayScale(System.Numerics.Complex[],System.Numerics.Complex,System.Numerics.Complex[])">
+            <summary>
+            Complex数组乘以常数
+            output = a * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayScale(System.IntPtr,System.Numerics.Complex,System.Int32)">
+            <summary>
+            Complex数组乘以常数
+            inout = inout * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayScale(System.Single[],System.Double)">
+            <summary>
+            float数组乘以常数
+            inout = inout * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayScale(System.Single[],System.Double,System.Single[])">
+            <summary>
+            float数组乘以常数
+            output = a * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArrayScale(System.Single[],System.Double)">
+            <summary>
+            float 数组乘以常数
+            output = a * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayScale(SeeSharpTools.JXI.Numerics.Complex32[],System.Double)">
+            <summary>
+            Comple32数组乘以常数
+            inout = inout * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayScale(SeeSharpTools.JXI.Numerics.Complex32[],System.Double,SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            Comple32数组乘以常数
+            output = a * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArrayScale(SeeSharpTools.JXI.Numerics.Complex32[],System.Double)">
+            <summary>
+            Complex32 数组乘以常数
+            output = a * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayScale(SeeSharpTools.JXI.Numerics.Complex32[],System.Single)">
+            <summary>
+            Comple32数组乘以常数
+            inout = inout * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayScale(SeeSharpTools.JXI.Numerics.Complex32[],System.Single,SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            Comple32数组乘以常数
+            output = a * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArrayScale(SeeSharpTools.JXI.Numerics.Complex32[],System.Single)">
+            <summary>
+            Complex32 数组乘以常数
+            output = a * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayScale(System.Numerics.Complex[],System.Double)">
+            <summary>
+            Complex数组乘以常数
+            inout = inout * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayScale(System.Numerics.Complex[],System.Double,System.Numerics.Complex[])">
+            <summary>
+            Complex数组乘以常数
+            output = a * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArrayScale(System.Numerics.Complex[],System.Double)">
+            <summary>
+            Complex 数组乘以常数
+            output = a * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMulti``1(``0[],``0[])">
+            <summary>
+            数组乘法
+            inout = inout * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMulti``1(``0[],``0[],``0[])">
+            <summary>
+            数组乘法
+            output = a * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArrayMulti``1(``0[],``0[])">
+            <summary>
+            数组乘法
+            return = a * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMulti(System.Int16[],System.Int16[])">
+            <summary>
+            I16 数组乘法
+            inout = inout * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMulti(System.Int16[],System.Int16[],System.Int16[])">
+            <summary>
+            I16 数组乘法
+            output = a * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMulti(System.Double[],System.Double[])">
+            <summary>
+            double 数组乘法
+            inout = inout * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMulti(System.Double[],System.Double[],System.Double[])">
+            <summary>
+            double 数组乘法
+            output = a * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMulti(System.Single[],System.Single[])">
+            <summary>
+            float 数组乘法
+            inout = inout * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMulti(System.Single[],System.Single[],System.Single[])">
+            <summary>
+            float 数组乘法
+            output = a * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMulti(System.Numerics.Complex[],System.Numerics.Complex[])">
+            <summary>
+            Complex 数组乘法
+            inout = inout * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMulti(System.Numerics.Complex[],System.Numerics.Complex[],System.Numerics.Complex[])">
+            <summary>
+            Complex 数组乘法
+            output = a * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMulti(SeeSharpTools.JXI.Numerics.Complex32[],SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            Complex32 数组乘法
+            inout = inout * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMulti(SeeSharpTools.JXI.Numerics.Complex32[],SeeSharpTools.JXI.Numerics.Complex32[],SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            Complex32 数组乘法
+            output = a * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMulti(System.Numerics.Complex[],System.Double[])">
+            <summary>
+            Complex 数组乘以 double 数组
+            inout = inout * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMulti(System.Numerics.Complex[],System.Double[],System.Numerics.Complex[])">
+            <summary>
+            Complex 数组乘以 double 数组
+            output = a * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArrayMulti(System.Numerics.Complex[],System.Double[])">
+            <summary>
+            Complex 数组乘以 double 数组
+            return = a * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMulti(SeeSharpTools.JXI.Numerics.Complex32[],System.Single[])">
+            <summary>
+            Complex32 数组乘以 float 数组
+            inout = inout * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMulti(SeeSharpTools.JXI.Numerics.Complex32[],System.Single[],SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            Complex32 数组乘以 float 数组
+            output = a * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArrayMulti(SeeSharpTools.JXI.Numerics.Complex32[],System.Single[])">
+            <summary>
+            Complex32 数组乘以 float 数组
+            return = a * b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMulti_double(System.Numerics.Complex[],System.IntPtr)">
+            <summary>
+            Complex 数组乘以 double 数组. double 数组已经按照 Complex 形式排列复制一份。
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayMulti_float(SeeSharpTools.JXI.Numerics.Complex32[],System.IntPtr)">
+            <summary>
+            Complex32 数组乘以 float 数组. float 数组已经按照 Complex32 形式排列复制一份。
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetPhaseUnwrap``1(``0[])">
+            <summary>
+            Unwraps the Phase array by eliminating discontinuities whose absolute values exceed either pi or 180.
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.PhaseUnwrap(System.Double[])">
+            <summary>
+            Unwraps the Phase array by eliminating discontinuities whose absolute values exceed either pi or 180.
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.PhaseUnwrap(System.Single[])">
+            <summary>
+            Unwraps the Phase array by eliminating discontinuities whose absolute values exceed either pi or 180.
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetDegree(System.Double[])">
+            <summary>
+            弧度转角度
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.RadToDegree(System.Double[])">
+            <summary>
+            弧度转角度
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetDegree(System.Single[])">
+            <summary>
+            弧度转角度
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.RadToDegree(System.Single[])">
+            <summary>
+            弧度转角度
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetRad(System.Double[])">
+            <summary>
+            角度转弧度
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.Degree2Rad(System.Double[])">
+            <summary>
+            角度转弧度
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetRad(System.Single[])">
+            <summary>
+            角度转弧度
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.Degree2Rad(System.Single[])">
+            <summary>
+            角度转弧度
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayLn(System.Double[])">
+            <summary>
+            double 数组取Ln
+            inout = ln(inout)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayLn(System.Double[],System.Double[])">
+            <summary>
+            double 数组取Ln
+            output = ln (a)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayLn(System.Single[])">
+            <summary>
+            float 数组取Ln
+            inout = ln(inout)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayLn(System.Single[],System.Single[])">
+            <summary>
+            float 数组取Ln
+            inout = ln(inout)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayLog10(System.Double[])">
+            <summary>
+            double 数组取Log10
+            inout = log10(inout)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayLog10(System.Double[],System.Double[])">
+            <summary>
+            double 数组取Log10
+            output = log10 (a)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayLog10(System.Single[])">
+            <summary>
+            float 数组取Log10
+            inout = log10(inout)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayLog10(System.Single[],System.Single[])">
+            <summary>
+            float 数组取Log10
+            inout = log10(inout)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayLog2(System.Double[])">
+            <summary>
+            double 数组取Log2
+            inout = log2(inout)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayLog2(System.Double[],System.Double[])">
+            <summary>
+            double 数组取Log2
+            output = log2 (a)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayLog2(System.Single[])">
+            <summary>
+            float 数组取Log10
+            inout = log2(inout)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayLog2(System.Single[],System.Single[])">
+            <summary>
+            float 数组取Log2
+            inout = log2(inout)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayExp(System.Double[])">
+            <summary>
+            double 数组取Exp
+            inout = Exp (inout)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayExp(System.Double[],System.Double[])">
+            <summary>
+            double 数组取Exp
+            output = Exp(a)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayExp(System.Single[])">
+            <summary>
+            float 数组取Exp
+            inout = Exp (inout)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayExp(System.Single[],System.Single[])">
+            <summary>
+            float 数组取Exp
+            output = Exp (a)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayExp10(System.Double[])">
+            <summary>
+            double 数组取Exp10
+            inout = Exp10 (inout)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayExp10(System.Double[],System.Double[])">
+            <summary>
+            double 数组取Exp10
+            output = Exp10(a)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayExp10(System.Single[])">
+            <summary>
+            float 数组取Exp10
+            inout = Exp10 (inout)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayExp10(System.Single[],System.Single[])">
+            <summary>
+            float 数组取Exp10
+            output = Exp10 (a)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayExp2(System.Double[])">
+            <summary>
+            double 数组取Exp2
+            inout = Exp2 (inout)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayExp2(System.Double[],System.Double[])">
+            <summary>
+            double 数组取Exp2
+            output = Exp2(a)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayExp2(System.Single[])">
+            <summary>
+            float 数组取Exp2
+            inout = Exp2 (inout)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayExp2(System.Single[],System.Single[])">
+            <summary>
+            float 数组取Exp2
+            output = Exp2 (a)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayReverse(System.Int16[])">
+            <summary>
+             数组反转
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayReverse(System.Int16[],System.Int16[])">
+            <summary>
+             数组反转
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayReverse(System.Single[])">
+            <summary>
+             数组反转
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayReverse(System.Single[],System.Single[])">
+            <summary>
+             数组反转
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayReverse(System.Double[])">
+            <summary>
+             数组反转
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayReverse(System.Double[],System.Double[])">
+            <summary>
+             数组反转
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayReverse(SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+             数组反转
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayReverse(SeeSharpTools.JXI.Numerics.Complex32[],SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+             数组反转
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayReverse(System.Numerics.Complex[])">
+            <summary>
+             数组反转
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayReverse(System.Numerics.Complex[],System.Numerics.Complex[])">
+            <summary>
+             数组反转
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAscend(System.Int16[])">
+            <summary>
+             数组升序
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAscend(System.Int16[],System.Int16[])">
+            <summary>
+             数组升序
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAscendIndex(System.Int16[],System.Int32[])">
+            <summary>
+             数组升序，并返回索引位置
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAscendIndex(System.Int16[],System.Int16[],System.Int32[])">
+            <summary>
+             数组升序，并返回索引位置
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAscend(System.Int32[])">
+            <summary>
+             数组升序
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAscend(System.Int32[],System.Int32[])">
+            <summary>
+             数组升序
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAscendIndex(System.Int32[],System.Int32[])">
+            <summary>
+             数组升序，并返回索引位置
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAscendIndex(System.Int32[],System.Int32[],System.Int32[])">
+            <summary>
+             数组升序，并返回索引位置
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAscend(System.Single[])">
+            <summary>
+             数组升序
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAscend(System.Single[],System.Single[])">
+            <summary>
+             数组升序
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAscendIndex(System.Single[],System.Int32[])">
+            <summary>
+             数组升序，并返回索引位置
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAscendIndex(System.Single[],System.Single[],System.Int32[])">
+            <summary>
+             数组升序，并返回索引位置
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAscend(System.Double[])">
+            <summary>
+             数组升序
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAscend(System.Double[],System.Double[])">
+            <summary>
+             数组升序
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAscendIndex(System.Double[],System.Int32[])">
+            <summary>
+             数组升序，并返回索引位置
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayAscendIndex(System.Double[],System.Double[],System.Int32[])">
+            <summary>
+             数组升序，并返回索引位置
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDescend(System.Int16[])">
+            <summary>
+             数组降序
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDescend(System.Int16[],System.Int16[])">
+            <summary>
+             数组降序
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDescendIndex(System.Int16[],System.Int32[])">
+            <summary>
+             数组降序，并返回索引位置
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDescendIndex(System.Int16[],System.Int16[],System.Int32[])">
+            <summary>
+             数组降序，并返回索引位置
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDescend(System.Int32[])">
+            <summary>
+             数组降序
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDescend(System.Int32[],System.Int32[])">
+            <summary>
+             数组降序
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDescendIndex(System.Int32[],System.Int32[])">
+            <summary>
+             数组降序，并返回索引位置
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDescendIndex(System.Int32[],System.Int32[],System.Int32[])">
+            <summary>
+             数组降序，并返回索引位置
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDescend(System.Single[])">
+            <summary>
+             数组降序
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDescend(System.Single[],System.Single[])">
+            <summary>
+             数组降序
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDescendIndex(System.Single[],System.Int32[])">
+            <summary>
+             数组降序，并返回索引位置
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDescendIndex(System.Single[],System.Single[],System.Int32[])">
+            <summary>
+             数组降序，并返回索引位置
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDescend(System.Double[])">
+            <summary>
+             数组降序
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDescend(System.Double[],System.Double[])">
+            <summary>
+             数组降序
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDescendIndex(System.Double[],System.Int32[])">
+            <summary>
+             数组降序，并返回索引位置
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayDescendIndex(System.Double[],System.Double[],System.Int32[])">
+            <summary>
+             数组降序，并返回索引位置
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySquare``1(``0[])">
+            <summary>
+            数组取平方
+            inout = inout ** 2
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySquare``1(``0[],``0[])">
+            <summary>
+            数组取平方
+            output = a ** 2
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArraySquare``1(``0[])">
+            <summary>
+            数组取平方
+            output = a ** 2
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayPowerSquare``1(``0[])">
+            <summary>
+            数组取平方
+            inout = inout ** 2
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayPowerSquare``1(``0[],``0[])">
+            <summary>
+            数组功率
+            output = a x a*
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArrayPowerSquare``1(``0[])">
+            <summary>
+            数组功率
+            output = a x a*
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySquare(System.Double[])">
+            <summary>
+            double 数组取平方
+            inout = inout ** 2
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySquare(System.Double[],System.Double[])">
+            <summary>
+            double 数组取平方
+            output = a ** 2
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArraySquare(System.Double[])">
+            <summary>
+            double 数组取平方
+            output = a ** 2
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySquare(System.Single[])">
+            <summary>
+            float 数组取平方
+            inout = inout ** 2
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySquare(System.Single[],System.Single[])">
+            <summary>
+            float 数组取平方
+            output = a ** 2
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArraySquare(System.Single[])">
+            <summary>
+            float 数组取平方
+            output = a ** 2
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySquare(System.Numerics.Complex[])">
+            <summary>
+            Complex 数组取平方
+            inout = inout ** 2
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySquare(System.Numerics.Complex[],System.Numerics.Complex[])">
+            <summary>
+            Complex 数组取平方
+            output = a ** 2
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArraySquare(System.Numerics.Complex[])">
+            <summary>
+            Complex 数组取平方
+            output = a ** 2
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySquare(SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            Complex32 数组取平方
+            inout = inout ** 2
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySquare(SeeSharpTools.JXI.Numerics.Complex32[],SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            Complex32 数组取平方
+            output = a ** 2
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArraySquare(SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            Complex32 数组取平方
+            output = a ** 2
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayRoot``1(``0[])">
+            <summary>
+            数组平方根
+            inout = sqrt (inout)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayRoot``1(``0[],``0[])">
+            <summary>
+            数组平方根
+            output = sqrt (a)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArrayRoot``1(``0[])">
+            <summary>
+            数组平方根
+            output = sqrt (a)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayRoot(System.Double[])">
+            <summary>
+            double 数组平方根
+            inout = sqrt (inout)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayRoot(System.Double[],System.Double[])">
+            <summary>
+            double 数组平方根
+            output = sqrt (a)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArrayRoot(System.Double[])">
+            <summary>
+            double 数组平方根
+            output = sqrt (a)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayRoot(System.Single[])">
+            <summary>
+            float 数组平方根
+            inout = sqrt (inout)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayRoot(System.Single[],System.Single[])">
+            <summary>
+            float 数组平方根
+            output = sqrt (a)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArrayRoot(System.Single[])">
+            <summary>
+            float 数组平方根
+            output = sqrt (a)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayRoot(System.Numerics.Complex[])">
+            <summary>
+            Complex 数组平方根
+            inout = sqrt (inout)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayRoot(System.Numerics.Complex[],System.Numerics.Complex[])">
+            <summary>
+            Complex 数组平方根
+            output = sqrt (a)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArrayRoot(System.Numerics.Complex[])">
+            <summary>
+            Complex 数组平方根
+            output = sqrt (a)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayRoot(SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            Complex32 数组平方根
+            inout = sqrt (inout)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArrayRoot(SeeSharpTools.JXI.Numerics.Complex32[],SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            Complex32 数组平方根
+            output = sqrt (a)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArrayRoot(SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            Complex32 数组平方根
+            output = sqrt (a)
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.SelfDiffer``1(``0[],System.Int32,System.Boolean)">
+            <summary>
+            数组平移自减
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub``1(``0[],``0[])">
+            <summary>
+            数组减法
+            inout = inout - b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub``1(``0[],``0[],``0[])">
+            <summary>
+            数组减法
+            output = a - b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArraySub``1(``0[],``0[])">
+            <summary>
+            数组减法
+            return = a - b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub(System.Int16[],System.Int16[])">
+            <summary>
+            I16 数组减法
+            inout = inout - b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub(System.Int16[],System.Int16[],System.Int16[])">
+            <summary>
+            I16 数组减法
+            output = a - b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub(System.Double[],System.Double[])">
+            <summary>
+            double 数组减法
+            inout = inout - b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub(System.Double[],System.Double[],System.Double[])">
+            <summary>
+            double 数组减法
+            output = a - b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub(System.Single[],System.Single[])">
+            <summary>
+            float 数组减法
+            inout = inout - b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub(System.Single[],System.Single[],System.Single[])">
+            <summary>
+            float 数组减法
+            output = a - b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub(System.Numerics.Complex[],System.Numerics.Complex[])">
+            <summary>
+            Complex 数组减法
+            inout = inout - b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub(System.Numerics.Complex[],System.Numerics.Complex[],System.Numerics.Complex[])">
+            <summary>
+            Complex 数组减法
+            output = a - b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub(SeeSharpTools.JXI.Numerics.Complex32[],SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            Complex32 数组减法
+            inout = inout - b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub(SeeSharpTools.JXI.Numerics.Complex32[],SeeSharpTools.JXI.Numerics.Complex32[],SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            Complex32 数组减法
+            output = a - b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub``1(``0[],``0)">
+            <summary>
+            数组减常数
+            inout = inout - b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub``1(``0[],``0,``0[])">
+            <summary>
+            数组减常数
+            output = a - b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArraySub``1(``0[],``0)">
+            <summary>
+            数组减常数
+            return = a - b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub(System.Int16[],System.Int16)">
+            <summary>
+            I16 数组减常数
+            inout = inout - b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub(System.Int16[],System.Int16,System.Int16[])">
+            <summary>
+            I16 数组减常数
+            output = a - b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub(System.Double[],System.Double)">
+            <summary>
+            double 数组减常数
+            inout = inout - b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub(System.Double[],System.Double,System.Double[])">
+            <summary>
+            double 数组减常数
+            output = a - b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub(System.Single[],System.Single)">
+            <summary>
+            float 数组减常数
+            inout = inout - b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub(System.Single[],System.Single,System.Single[])">
+            <summary>
+            float 数组减常数
+            output = a - b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub(System.Numerics.Complex[],System.Numerics.Complex)">
+            <summary>
+            Complex 数组减常数
+            inout = inout - b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub(System.Numerics.Complex[],System.Numerics.Complex,System.Numerics.Complex[])">
+            <summary>
+            Complex 数组减常数
+            output = a - b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub(SeeSharpTools.JXI.Numerics.Complex32[],SeeSharpTools.JXI.Numerics.Complex32)">
+            <summary>
+            Complex32 数组减常数
+            inout = inout - b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub(SeeSharpTools.JXI.Numerics.Complex32[],SeeSharpTools.JXI.Numerics.Complex32,SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            Complex32 数组减常数
+            output = a - b
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub``1(``0,``0[])">
+            <summary>
+            常数减数组
+            inout = b - inout
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub``1(``0,``0[],``0[])">
+            <summary>
+            数组减常数
+            output = b - a
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GetArraySub``1(``0,``0[])">
+            <summary>
+            数组减常数
+            return = b - a
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub(System.Double,System.Double[])">
+            <summary>
+            double 常数减数组
+            inout =  b - inout
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub(System.Double,System.Double[],System.Double[])">
+            <summary>
+            double 常数减数组
+            output = b - a
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub(System.Single,System.Single[])">
+            <summary>
+            float 常数减数组
+            inout =  b - inout
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub(System.Single,System.Single[],System.Single[])">
+            <summary>
+            float 常数减数组
+            output = b - a
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub(System.Numerics.Complex,System.Numerics.Complex[])">
+            <summary>
+            Complex 常数减数组
+            inout = b - inout
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub(System.Numerics.Complex,System.Numerics.Complex[],System.Numerics.Complex[])">
+            <summary>
+            Complex 常数减数组
+            output = b - a
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub(SeeSharpTools.JXI.Numerics.Complex32,SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            Complex32 常数减数组
+            inout = b - inout
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySub(SeeSharpTools.JXI.Numerics.Complex32,SeeSharpTools.JXI.Numerics.Complex32[],SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            Complex32 常数减数组
+            output = b - a
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySum``1(``0[])">
+            <summary>
+            数组求和
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySum(System.Double[])">
+            <summary>
+            对 double 数组求和
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySum(System.Single[])">
+            <summary>
+            对 float 数组求和
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySum(System.Numerics.Complex[])">
+            <summary>
+            对 Complex 数组求和
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ArraySum(SeeSharpTools.JXI.Numerics.Complex32[])">
+            <summary>
+            对 Complex32 数组求和
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConstInit(System.Int32,System.Byte)">
+            <summary>
+            生成常数 byte 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConstInit(System.Int32,System.Byte[],System.Byte)">
+            <summary>
+            生成常数 byte 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConstInit(System.Int32,System.Int16)">
+            <summary>
+            生成常数 short 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConstInit(System.Int32,System.Int16[],System.Int16)">
+            <summary>
+            生成常数 short 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConstInit(System.Int32,System.Int32)">
+            <summary>
+            生成常数 int 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConstInit(System.Int32,System.Int32[],System.Int32)">
+            <summary>
+            生成常数 int 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConstInit(System.Int32,System.Double)">
+            <summary>
+            生成常数 double 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConstInit(System.Int32,System.Double[],System.Double)">
+            <summary>
+            生成常数 double 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConstInit(System.Int32,System.Single)">
+            <summary>
+            生成常数 float 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConstInit(System.Int32,System.Single[],System.Single)">
+            <summary>
+            生成常数 float 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConstInit(System.Int32,System.Numerics.Complex)">
+            <summary>
+            生成常数 Complex 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConstInit(System.Int32,System.Numerics.Complex[],System.Numerics.Complex)">
+            <summary>
+            生成常数 Complex 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConstInit(System.Int32,SeeSharpTools.JXI.Numerics.Complex32)">
+            <summary>
+            生成常数 Complex32 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConstInit(System.Int32,SeeSharpTools.JXI.Numerics.Complex32[],SeeSharpTools.JXI.Numerics.Complex32)">
+            <summary>
+            生成常数 Complex32 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConstInit``1(System.Int32,``0)">
+            <summary>
+            生成常数数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ConstInit``1(System.Int32,``0,System.IntPtr)">
+            <summary>
+            生成常数数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ZeroInit``1(System.Int32)">
+            <summary>
+            生成全零数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ZeroInit``1(System.Int32,``0[])">
+            <summary>
+            生成全零数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ZeroInit``1(System.Int32,System.IntPtr)">
+            <summary>
+            生成全零数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.RampInit(System.Int32,System.Double,System.Double)">
+            <summary>
+            生成一阶线性 double 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.RampInit(System.Int32,System.Single,System.Single)">
+            <summary>
+            生成一阶线性 float 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ToneInit(System.Int32,System.Double,System.Double,System.Double)">
+            <summary>
+            生成 Complex 单频数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ToneInit(System.Int32,System.Double,System.Double@,System.Double)">
+            <summary>
+            生成 Complex 单频数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ToneInit(System.Int32,System.Numerics.Complex[],System.Double,System.Double@,System.Double)">
+            <summary>
+            生成 Complex 单频数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ToneInit(System.Int32,System.Single,System.Single,System.Single)">
+            <summary>
+            生成 Complex32 单频数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ToneInit(System.Int32,System.Single,System.Single@,System.Single)">
+            <summary>
+            生成 Complex32 单频数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ToneInit(System.Int32,SeeSharpTools.JXI.Numerics.Complex32[],System.Single,System.Single@,System.Single)">
+            <summary>
+            生成 Complex32 单频数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.ToneInit``1(System.Int32,System.Double,System.Double,System.Double)">
+            <summary>
+            生成单频数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.CosineInit(System.Int32,System.Double,System.Double,System.Double)">
+            <summary>
+            生成 Cosine 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.CosineInit(System.Int32,System.Double,System.Double@,System.Double)">
+            <summary>
+            生成 Cosine 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.CosineInit(System.Int32,System.Single,System.Single,System.Single)">
+            <summary>
+            生成 Cosine 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.CosineInit(System.Int32,System.Single,System.Single@,System.Single)">
+            <summary>
+            生成 Cosine 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.SineInit(System.Int32,System.Double,System.Double,System.Double)">
+            <summary>
+            生成 Sine 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.SineInit(System.Int32,System.Double,System.Double@,System.Double)">
+            <summary>
+            生成 Sine 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.SineInit(System.Int32,System.Single,System.Single,System.Single)">
+            <summary>
+            生成 Cosine 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.SineInit(System.Int32,System.Single,System.Single@,System.Single)">
+            <summary>
+            生成 Cosine 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.UniformNoise(System.Int32,System.Double,System.Double,System.UInt32)">
+            <summary>
+            生成均一白噪声 double 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.UniformNoise(System.Int32,System.Single,System.Single,System.UInt32)">
+            <summary>
+            生成均一白噪声 float 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.UniformNoise(System.Int32,System.Numerics.Complex,System.Double,System.UInt32)">
+            <summary>
+            生成均一白噪声 Complex 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.UniformNoise(System.Int32,SeeSharpTools.JXI.Numerics.Complex32,System.Single,System.UInt32)">
+            <summary>
+            生成均一白噪声 Complex32 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GaussNoise(System.Int32,System.Double,System.Double,System.UInt32)">
+            <summary>
+            生成高斯白噪声 double 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GaussNoise(System.Int32,System.Single,System.Single,System.UInt32)">
+            <summary>
+            生成高斯白噪声 float 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GaussNoise(System.Int32,System.Numerics.Complex,System.Double,System.UInt32)">
+            <summary>
+            生成高斯白噪声 Complex 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.GaussNoise(System.Int32,SeeSharpTools.JXI.Numerics.Complex32,System.Single,System.UInt32)">
+            <summary>
+            生成高斯白噪声 Complex32 数组
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.TriangleInit(System.Int32,System.Double,System.Double,System.Double)">
+            <summary>
+            生成 Triangle 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.TriangleInit(System.Int32,System.Double,System.Double@,System.Double)">
+            <summary>
+            生成 Triangle 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.TriangleInit(System.Int32,System.Single,System.Single,System.Single)">
+            <summary>
+            生成 Triangle 
+            </summary>
+        </member>
+        <member name="M:SeeSharpTools.JXI.Numerics.Vector.TriangleInit(System.Int32,System.Single,System.Single@,System.Single)">
+            <summary>
+            生成 Triangle 
+            </summary>
+        </member>
+    </members>
+</doc>

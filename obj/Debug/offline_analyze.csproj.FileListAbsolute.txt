@@ -1,0 +1,145 @@
+F:\git\FFME_git\drivers\WFD\Example\wfd_demo\obj\Debug\offline_analyze.csprojAssemblyReference.cache
+F:\git\FFME_git\drivers\WFD\Example\wfd_demo\obj\Debug\wfd_demo.MainFrom.resources
+F:\git\FFME_git\drivers\WFD\Example\wfd_demo\obj\Debug\offline_analyze.Properties.Resources.resources
+F:\git\FFME_git\drivers\WFD\Example\wfd_demo\obj\Debug\offline_analyze.csproj.GenerateResource.cache
+F:\git\FFME_git\drivers\WFD\Example\wfd_demo\obj\Debug\offline_analyze.csproj.CoreCompileInputs.cache
+F:\git\FFME_git\drivers\WFD\x64\Debug\offline_analyze.exe.config
+F:\git\FFME_git\drivers\WFD\x64\Debug\offline_analyze.exe
+F:\git\FFME_git\drivers\WFD\x64\Debug\offline_analyze.pdb
+F:\git\FFME_git\drivers\WFD\Example\wfd_demo\obj\Debug\offline_analyze.csproj.CopyComplete
+F:\git\FFME_git\drivers\WFD\Example\wfd_demo\obj\Debug\offline_analyze.exe
+F:\git\FFME_git\drivers\WFD\Example\wfd_demo\obj\Debug\offline_analyze.pdb
+C:\Users\dell\Desktop\画图\obj\Debug\offline_analyze.csproj.AssemblyReference.cache
+C:\Users\dell\Desktop\画图\obj\Debug\wfd_demo.MainFrom.resources
+C:\Users\dell\Desktop\画图\obj\Debug\offline_analyze.Properties.Resources.resources
+C:\Users\dell\Desktop\画图\obj\Debug\offline_analyze.csproj.GenerateResource.cache
+C:\Users\dell\Desktop\画图\obj\Debug\offline_analyze.csproj.CoreCompileInputs.cache
+C:\Users\dell\Desktop\画图\obj\Debug\offline_analyze.exe
+C:\Users\dell\Desktop\画图\obj\Debug\offline_analyze.pdb
+C:\Users\admin\x64\Debug\offline_analyze.exe.config
+C:\Users\admin\x64\Debug\offline_analyze.exe
+C:\Users\admin\Desktop\画图\x64\Debug\offline_analyze.exe.config
+C:\Users\admin\Desktop\画图\x64\Debug\offline_analyze.exe
+C:\Users\admin\Desktop\画图\x64\Debug\Newtonsoft.Json.dll
+C:\Users\admin\Desktop\画图\x64\Debug\Newtonsoft.Json.xml
+C:\Users\admin\Desktop\画图\obj\Debug\wfd_demo.MainFrom.resources
+C:\Users\admin\Desktop\画图\obj\Debug\offline_analyze.Properties.Resources.resources
+C:\Users\admin\Desktop\画图\obj\Debug\offline_analyze.csproj.GenerateResource.cache
+C:\Users\admin\Desktop\画图\obj\Debug\offline_analyze.csproj.CoreCompileInputs.cache
+C:\Users\admin\Desktop\画图\obj\Debug\offline_analyze.csproj.CopyComplete
+C:\Users\admin\Desktop\画图\obj\Debug\offline_analyze.exe.config
+C:\Users\admin\Desktop\画图\obj\Debug\offline_analyze.exe
+C:\Users\admin\Desktop\画图\obj\Debug\Newtonsoft.Json.dll
+C:\Users\admin\Desktop\画图\obj\Debug\Newtonsoft.Json.xml
+C:\Users\admin\Desktop\画图\obj\Debug\offline_analyze.csprojAssemblyReference.cache
+C:\Users\admin\Desktop\画图\obj\Debug\offline_analyze.pdb
+C:\Users\admin\Desktop\画图\obj\Debug\SeeSharpTools.JY.GUI.dll
+C:\Users\admin\Desktop\画图\obj\Debug\SeeSharpTools.JY.GUI.xml
+C:\Users\dell\Desktop\画图\obj\Debug\offline_analyze.csproj.CopyComplete
+C:\Users\dell\Desktop\画图\obj\Debug\offline_analyze.exe.config
+C:\Users\dell\Desktop\画图\obj\Debug\Newtonsoft.Json.dll
+C:\Users\dell\Desktop\画图\obj\Debug\Newtonsoft.Json.xml
+C:\Users\dell\Desktop\画图\obj\Debug\SeeSharpTools.JY.GUI.xml
+C:\Users\dell\Desktop\画图 - 副本\obj\Debug\offline_analyze.csproj.AssemblyReference.cache
+C:\Users\dell\Desktop\画图 - 副本\obj\Debug\wfd_demo.MainFrom.resources
+C:\Users\dell\Desktop\画图 - 副本\obj\Debug\offline_analyze.Properties.Resources.resources
+C:\Users\dell\Desktop\画图 - 副本\obj\Debug\offline_analyze.csproj.GenerateResource.cache
+C:\Users\dell\Desktop\画图 - 副本\obj\Debug\offline_analyze.csproj.CoreCompileInputs.cache
+C:\Users\dell\Desktop\画图 - 副本\obj\Debug\offline_analyze.csproj.CopyComplete
+C:\Users\dell\Desktop\画图 - 副本\obj\Debug\offline_analyze.exe.config
+C:\Users\dell\Desktop\画图 - 副本\obj\Debug\offline_analyze.exe
+C:\Users\dell\Desktop\画图 - 副本\obj\Debug\offline_analyze.pdb
+C:\Users\dell\Desktop\画图 - 副本\obj\Debug\Newtonsoft.Json.dll
+C:\Users\dell\Desktop\画图 - 副本\obj\Debug\Newtonsoft.Json.xml
+C:\Users\dell\Desktop\画图 - 副本\obj\Debug\SeeSharpTools.JY.GUI.xml
+C:\Users\dell\Desktop\画图 - 副本\obj\Debug\SeeSharpTools.JY.DSP.SoundVibration.dll
+C:\Users\dell\Desktop\画图 - 副本\obj\Debug\SeeSharpTools.JY.DSP.Fundamental.dll
+C:\Users\dell\Desktop\画图 - 副本\obj\Debug\SeeSharpTools.JY.DSP.SoundVibration.xml
+C:\Users\dell\Desktop\画图 - 副本\obj\Debug\SeeSharpTools.JY.DSP.Fundamental.xml
+C:\Users\dell\Desktop\画图 - 最终版\obj\Debug\wfd_demo.MainFrom.resources
+C:\Users\dell\Desktop\画图 - 最终版\obj\Debug\offline_analyze.Properties.Resources.resources
+C:\Users\dell\Desktop\画图 - 最终版\obj\Debug\offline_analyze.csproj.GenerateResource.cache
+C:\Users\dell\Desktop\画图 - 最终版\obj\Debug\offline_analyze.csproj.CoreCompileInputs.cache
+C:\Users\dell\Desktop\画图 - 最终版\obj\Debug\offline_analyze.csproj.CopyComplete
+C:\Users\dell\Desktop\画图 - 最终版\obj\Debug\offline_analyze.exe.config
+C:\Users\dell\Desktop\画图 - 最终版\obj\Debug\offline_analyze.exe
+C:\Users\dell\Desktop\画图 - 最终版\obj\Debug\offline_analyze.pdb
+C:\Users\dell\Desktop\画图 - 最终版\obj\Debug\Newtonsoft.Json.dll
+C:\Users\dell\Desktop\画图 - 最终版\obj\Debug\SeeSharpTools.JY.DSP.SoundVibration.dll
+C:\Users\dell\Desktop\画图 - 最终版\obj\Debug\SeeSharpTools.JY.DSP.Fundamental.dll
+C:\Users\dell\Desktop\画图 - 最终版\obj\Debug\Newtonsoft.Json.xml
+C:\Users\dell\Desktop\画图 - 最终版\obj\Debug\SeeSharpTools.JY.DSP.SoundVibration.xml
+C:\Users\dell\Desktop\画图 - 最终版\obj\Debug\SeeSharpTools.JY.DSP.Fundamental.xml
+C:\Users\dell\Desktop\画图 - 最终版\obj\Debug\offline_analyze.csproj.AssemblyReference.cache
+C:\Users\dell\Desktop\画图 - 最终版 -读立坤师兄的数据\obj\Debug\offline_analyze.csproj.AssemblyReference.cache
+C:\Users\dell\Desktop\画图 - 最终版 -读立坤师兄的数据\obj\Debug\wfd_demo.MainFrom.resources
+C:\Users\dell\Desktop\画图 - 最终版 -读立坤师兄的数据\obj\Debug\offline_analyze.Properties.Resources.resources
+C:\Users\dell\Desktop\画图 - 最终版 -读立坤师兄的数据\obj\Debug\offline_analyze.csproj.GenerateResource.cache
+C:\Users\dell\Desktop\画图 - 最终版 -读立坤师兄的数据\obj\Debug\offline_analyze.csproj.CoreCompileInputs.cache
+C:\Users\dell\Desktop\画图 - 最终版 -读立坤师兄的数据\obj\Debug\offline_analyze.csproj.CopyComplete
+C:\Users\dell\Desktop\画图 - 最终版 -读立坤师兄的数据\obj\Debug\offline_analyze.exe.config
+C:\Users\dell\Desktop\画图 - 最终版 -读立坤师兄的数据\obj\Debug\offline_analyze.exe
+C:\Users\dell\Desktop\画图 - 最终版 -读立坤师兄的数据\obj\Debug\offline_analyze.pdb
+C:\Users\dell\Desktop\画图 - 最终版 -读立坤师兄的数据\obj\Debug\Newtonsoft.Json.dll
+C:\Users\dell\Desktop\画图 - 最终版 -读立坤师兄的数据\obj\Debug\SeeSharpTools.JY.DSP.SoundVibration.dll
+C:\Users\dell\Desktop\画图 - 最终版 -读立坤师兄的数据\obj\Debug\SeeSharpTools.JY.DSP.Fundamental.dll
+C:\Users\dell\Desktop\画图 - 最终版 -读立坤师兄的数据\obj\Debug\Newtonsoft.Json.xml
+C:\Users\dell\Desktop\画图 - 最终版 -读立坤师兄的数据\obj\Debug\SeeSharpTools.JY.DSP.SoundVibration.xml
+C:\Users\dell\Desktop\画图 - 最终版 -读立坤师兄的数据\obj\Debug\SeeSharpTools.JY.DSP.Fundamental.xml
+C:\Users\dell\Desktop\毕业论文\画图 - 最终版 -读立坤师兄的数据\obj\Debug\offline_analyze.csproj.AssemblyReference.cache
+C:\Users\dell\Desktop\毕业论文\画图 - 最终版 -读立坤师兄的数据\obj\Debug\wfd_demo.MainFrom.resources
+C:\Users\dell\Desktop\毕业论文\画图 - 最终版 -读立坤师兄的数据\obj\Debug\offline_analyze.Properties.Resources.resources
+C:\Users\dell\Desktop\毕业论文\画图 - 最终版 -读立坤师兄的数据\obj\Debug\offline_analyze.csproj.GenerateResource.cache
+C:\Users\dell\Desktop\毕业论文\画图 - 最终版 -读立坤师兄的数据\obj\Debug\offline_analyze.csproj.CoreCompileInputs.cache
+C:\Users\dell\Desktop\毕业论文\画图 - 最终版 -读立坤师兄的数据\obj\Debug\offline_analyze.csproj.CopyComplete
+C:\Users\dell\Desktop\毕业论文\画图 - 最终版 -读立坤师兄的数据\obj\Debug\offline_analyze.exe.config
+C:\Users\dell\Desktop\毕业论文\画图 - 最终版 -读立坤师兄的数据\obj\Debug\offline_analyze.exe
+C:\Users\dell\Desktop\毕业论文\画图 - 最终版 -读立坤师兄的数据\obj\Debug\offline_analyze.pdb
+C:\Users\dell\Desktop\毕业论文\画图 - 最终版 -读立坤师兄的数据\obj\Debug\Newtonsoft.Json.dll
+C:\Users\dell\Desktop\毕业论文\画图 - 最终版 -读立坤师兄的数据\obj\Debug\SeeSharpTools.JY.DSP.SoundVibration.dll
+C:\Users\dell\Desktop\毕业论文\画图 - 最终版 -读立坤师兄的数据\obj\Debug\SeeSharpTools.JY.DSP.Fundamental.dll
+C:\Users\dell\Desktop\毕业论文\画图 - 最终版 -读立坤师兄的数据\obj\Debug\Newtonsoft.Json.xml
+C:\Users\dell\Desktop\毕业论文\画图 - 最终版 -读立坤师兄的数据\obj\Debug\SeeSharpTools.JY.DSP.SoundVibration.xml
+C:\Users\dell\Desktop\毕业论文\画图 - 最终版 -读立坤师兄的数据\obj\Debug\SeeSharpTools.JY.DSP.Fundamental.xml
+C:\Users\dell\Desktop\读立坤师兄的数据\obj\Debug\offline_analyze.csproj.AssemblyReference.cache
+C:\Users\dell\Desktop\读立坤师兄的数据\obj\Debug\wfd_demo.MainFrom.resources
+C:\Users\dell\Desktop\读立坤师兄的数据\obj\Debug\offline_analyze.Properties.Resources.resources
+C:\Users\dell\Desktop\读立坤师兄的数据\obj\Debug\offline_analyze.csproj.GenerateResource.cache
+C:\Users\dell\Desktop\读立坤师兄的数据\obj\Debug\offline_analyze.csproj.CoreCompileInputs.cache
+C:\Users\dell\Desktop\读立坤师兄的数据\obj\Debug\offline_analyze.csproj.CopyComplete
+C:\Users\dell\Desktop\读立坤师兄的数据\obj\Debug\offline_analyze.exe.config
+C:\Users\dell\Desktop\读立坤师兄的数据\obj\Debug\offline_analyze.exe
+C:\Users\dell\Desktop\读立坤师兄的数据\obj\Debug\offline_analyze.pdb
+C:\Users\dell\Desktop\读立坤师兄的数据\obj\Debug\Newtonsoft.Json.dll
+C:\Users\dell\Desktop\读立坤师兄的数据\obj\Debug\SeeSharpTools.JY.DSP.SoundVibration.dll
+C:\Users\dell\Desktop\读立坤师兄的数据\obj\Debug\SeeSharpTools.JY.DSP.Fundamental.dll
+C:\Users\dell\Desktop\读立坤师兄的数据\obj\Debug\Newtonsoft.Json.xml
+C:\Users\dell\Desktop\读立坤师兄的数据\obj\Debug\SeeSharpTools.JY.DSP.SoundVibration.xml
+C:\Users\dell\Desktop\读立坤师兄的数据\obj\Debug\SeeSharpTools.JY.DSP.Fundamental.xml
+D:\实验室\读立坤师兄的数据\obj\Debug\offline_analyze.csproj.AssemblyReference.cache
+D:\实验室\读立坤师兄的数据\obj\Debug\offline_analyze.csproj.SuggestedBindingRedirects.cache
+D:\实验室\读立坤师兄的数据\obj\Debug\wfd_demo.MainFrom.resources
+D:\实验室\读立坤师兄的数据\obj\Debug\offline_analyze.Properties.Resources.resources
+D:\实验室\读立坤师兄的数据\obj\Debug\offline_analyze.csproj.GenerateResource.cache
+D:\实验室\读立坤师兄的数据\obj\Debug\offline_analyze.csproj.CoreCompileInputs.cache
+D:\实验室\读立坤师兄的数据\obj\Debug\offline_analyze.csproj.CopyComplete
+D:\实验室\读立坤师兄的数据\obj\Debug\offline_analyze.exe.config
+D:\实验室\读立坤师兄的数据\obj\Debug\offline_analyze.exe
+D:\实验室\读立坤师兄的数据\obj\Debug\offline_analyze.pdb
+D:\实验室\读立坤师兄的数据\obj\Debug\Newtonsoft.Json.dll
+D:\实验室\读立坤师兄的数据\obj\Debug\SeeSharpTools.JY.DSP.Fundamental.dll
+D:\实验室\读立坤师兄的数据\obj\Debug\Newtonsoft.Json.xml
+D:\实验室\读立坤师兄的数据\obj\Debug\SeeSharpTools.JY.DSP.SoundVibration.xml
+D:\实验室\读立坤师兄的数据\obj\Debug\SeeSharpTools.JY.DSP.Fundamental.xml
+D:\实验室\读立坤师兄的数据\obj\Debug\SeeSharpTools.JXI.SignalProcessing.dll
+D:\实验室\读立坤师兄的数据\obj\Debug\SeeSharpTools.JXI.Numerics.dll
+D:\实验室\读立坤师兄的数据\obj\Debug\SeeSharpTools.JXI.Mathematics.dll
+D:\实验室\读立坤师兄的数据\obj\Debug\MathNet.Numerics.dll
+D:\实验室\读立坤师兄的数据\obj\Debug\SeeSharpTools.JXI.SignalProcessing.pdb
+D:\实验室\读立坤师兄的数据\obj\Debug\SeeSharpTools.JXI.Numerics.pdb
+D:\实验室\读立坤师兄的数据\obj\Debug\SeeSharpTools.JXI.Numerics.xml
+D:\实验室\读立坤师兄的数据\obj\Debug\SeeSharpTools.JXI.Mathematics.pdb
+D:\实验室\读立坤师兄的数据\obj\Debug\SeeSharpTools.JXI.Mathematics.xml
+D:\实验室\读立坤师兄的数据\obj\Debug\MathNet.Numerics.xml
+D:\实验室\读立坤师兄的数据\obj\Debug\SeeSharpTools.JY.ArrayUtility.dll
+D:\实验室\读立坤师兄的数据\obj\Debug\SeeSharpTools.JY.ArrayUtility.xml
